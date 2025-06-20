@@ -1,5 +1,5 @@
 ## Wedding eInvitation Template
-by **Jessen Reinhart**
+# by **Jessen Reinhart**
 ---
 
 ## Run Locally
