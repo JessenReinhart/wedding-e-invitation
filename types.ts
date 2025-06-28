@@ -1,4 +1,3 @@
-
 export interface EventInfo {
   title: string;
   time: string;
@@ -25,4 +24,11 @@ export interface WeddingDetails {
   rsvpByDate: string;
   galleryImages: GalleryImage[];
   footerMessage: string;
+}
+
+export interface Guest {
+  id: number;
+  name: string;
+  status: 'Attending' | 'Not Attending' | 'Pending';
+  email: string;
 }
