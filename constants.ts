@@ -1,5 +1,3 @@
-
-
 import { WeddingDetails } from './types';
 
 export const WEDDING_DETAILS: WeddingDetails = {
@@ -14,14 +12,18 @@ export const WEDDING_DETAILS: WeddingDetails = {
     time: "2:00 PM",
     venue: "The Enchanted Garden",
     address: "123 Blossom Lane, Dreamville, CA",
-    details: "Join us as we exchange vows in a beautiful garden setting, surrounded by nature's tranquility."
+    details: "Join us as we exchange vows in a beautiful garden setting, surrounded by nature's tranquility.",
+    latitude: 34.052235, // Example latitude for Los Angeles
+    longitude: -118.243683 // Example longitude for Los Angeles
   },
   reception: {
     title: "The Reception",
     time: "6:00 PM",
     venue: "Starlight Ballroom",
     address: "456 Celebration Avenue, Dreamville, CA",
-    details: "Celebrate with us! An evening of dinner, dancing, and making memories to last a lifetime awaits."
+    details: "Celebrate with us! An evening of dinner, dancing, and making memories to last a lifetime awaits.",
+    latitude: 34.052235, // Example latitude for Los Angeles
+    longitude: -118.243683 // Example longitude for Los Angeles
   },
   rsvpByDate: "September 15, 2024",
   galleryImages: [
@@ -32,6 +34,25 @@ export const WEDDING_DETAILS: WeddingDetails = {
     { src: "https://picsum.photos/seed/gallery5/800/600", alt: "Scenic view" },
     { src: "https://picsum.photos/seed/gallery6/800/600", alt: "Close-up detail" },
   ],
+  comments: [
+    {
+      id: 1,
+      author: "Aunt Carol",
+      message: "So thrilled for you both! Wishing you a lifetime of happiness.",
+      timestamp: "2024-06-25T10:00:00Z",
+    },
+    {
+      id: 2,
+      author: "John (from College)",
+      message: "Can't wait to celebrate with you guys! It's going to be an epic party.",
+      timestamp: "2024-06-24T15:30:00Z",
+    },
+    {
+      id: 3,
+      author: "Grandma Sue",
+      message: "My heart is so full. Seeing you two together brings me so much joy. All my love.",
+      timestamp: "2024-06-23T11:45:00Z",
+    },
+  ],
   footerMessage: "Made with love for our special day."
 };
-

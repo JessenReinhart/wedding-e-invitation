@@ -4,11 +4,20 @@ export interface EventInfo {
   venue: string;
   address: string;
   details?: string;
+  latitude: number;
+  longitude: number;
 }
 
 export interface GalleryImage {
   src: string;
   alt: string;
+}
+
+export interface Comment {
+  id: number;
+  author: string;
+  message: string;
+  timestamp: string;
 }
 
 export interface WeddingDetails {
@@ -20,10 +29,10 @@ export interface WeddingDetails {
   story: string;
   ceremony: EventInfo;
   reception: EventInfo;
-  rsvpLink: string;
   rsvpByDate: string;
   galleryImages: GalleryImage[];
   footerMessage: string;
+  comments: Comment[];
 }
 
 export interface Guest {

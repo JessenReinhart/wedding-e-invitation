@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import SectionWrapper from './SectionWrapper';
 
 interface RSVPSectionProps {
@@ -8,6 +7,10 @@ interface RSVPSectionProps {
 }
 
 const RSVPSection: React.FC<RSVPSectionProps> = ({ rsvpDate }) => {
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const visitorName = params.get('name');
+
   return (
     <SectionWrapper id="rsvp" className="bg-soft-blush">
       <div className="text-center animate-fade-in-up">
@@ -21,7 +24,7 @@ const RSVPSection: React.FC<RSVPSectionProps> = ({ rsvpDate }) => {
         
         <div className="flex flex-col items-center space-y-8">
           <Link
-            to="/rsvp"
+            to={visitorName ? `/rsvp?name=${visitorName}` : "/rsvp"}
             className="inline-block bg-deep-green hover:bg-opacity-90 text-white font-semibold py-4 px-10 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105 text-lg"
           >
             RSVP Online

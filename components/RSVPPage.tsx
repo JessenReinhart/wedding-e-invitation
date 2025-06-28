@@ -1,14 +1,22 @@
-
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
 const RSVPPage: React.FC = () => {
+  const location = useLocation();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [attending, setAttending] = useState<'yes' | 'no' | null>(null);
   const [guests, setGuests] = useState(1);
   const [message, setMessage] = useState('');
   const [submitted, setSubmitted] = useState(false);
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const visitorName = params.get('name');
+    if (visitorName) {
+      setName(visitorName);
+    }
+  }, [location.search]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -57,14 +65,13 @@ const RSVPPage: React.FC = () => {
 
           <div>
             <label htmlFor="email" className="block text-md font-semibold text-charcoal-gray mb-2">
-              Email Address
+              Email Address (Optional)
             </label>
             <input
               type="email"
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              required
               className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-rose-gold focus:border-transparent transition"
               placeholder="your.email@example.com"
             />
@@ -141,7 +148,7 @@ const RSVPPage: React.FC = () => {
             </button>
           </div>
         </form>
-        
+
         <div className="text-center mt-8">
           <Link to="/" className="text-sm text-rose-gold hover:underline">
             &larr; Return to the main site

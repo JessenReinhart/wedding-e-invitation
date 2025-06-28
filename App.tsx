@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { WEDDING_DETAILS } from './constants';
@@ -12,6 +11,9 @@ import Footer from './components/Footer';
 import MessageFromCouple from './components/MessageFromCouple';
 import AdminPage from './components/AdminPage';
 import RSVPPage from './components/RSVPPage';
+import CommentSection from './components/CommentSection';
+import LoginPage from './components/LoginPage';
+import PrivateRoute from './components/PrivateRoute';
 
 const App: React.FC = () => {
   return (
@@ -37,10 +39,19 @@ const App: React.FC = () => {
                 <RSVPSection rsvpDate={WEDDING_DETAILS.rsvpByDate} />
                 <GallerySection images={WEDDING_DETAILS.galleryImages} />
                 <MessageFromCouple brideName={WEDDING_DETAILS.brideName} groomName={WEDDING_DETAILS.groomName} />
+                <CommentSection initialComments={WEDDING_DETAILS.comments} />
               </>
             }
           />
-          <Route path="/admin" element={<AdminPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route
+            path="/admin"
+            element={
+              <PrivateRoute>
+                <AdminPage />
+              </PrivateRoute>
+            }
+          />
           <Route path="/rsvp" element={<RSVPPage />} />
         </Routes>
       </main>
