@@ -1,46 +1,30 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import GuestList from './GuestList';
 import CommentManagement from './CommentManagement';
-import { Guest } from '../types';
-
-// Dummy data for demonstration. In a real app, this would come from a global state or API.
-const initialGuests: Guest[] = [
-  {
-    id: 1,
-    name: 'John Doe',
-    status: 'Attending',
-    email: 'john.doe@example.com',
-  },
-  {
-    id: 2,
-    name: 'Jane Smith',
-    status: 'Not Attending',
-    email: 'jane.smith@example.com',
-  },
-  {
-    id: 3,
-    name: 'Peter Jones',
-    status: 'Pending',
-    email: 'peter.jones@example.com',
-  },
-  {
-    id: 4,
-    name: 'Alice Brown',
-    status: 'Attending',
-    email: 'alice.brown@example.com',
-  },
-  {
-    id: 5,
-    name: 'Bob White',
-    status: 'Pending',
-    email: 'bob.white@example.com',
-  },
-];
+import { supabase } from '../supabaseClient';
 
 const AdminPage: React.FC = () => {
   const navigate = useNavigate();
-  const confirmedGuestsCount = initialGuests.filter(guest => guest.status === 'Attending').length;
+  const [confirmedGuestsCount, setConfirmedGuestsCount] = useState(0);
+
+  useEffect(() => {
+    const fetchConfirmedGuests = async () => {
+      const { data, error } = await supabase
+        .from('guests')
+        .select('plusoneqty')
+        .eq('status', 'attending');
+
+      if (error) {
+        console.error('Error fetching confirmed guests:', error);
+      } else {
+        const totalConfirmed = data.reduce((sum, guest) => sum + (guest.plusoneqty || 0), 0);
+        setConfirmedGuestsCount(totalConfirmed);
+      }
+    };
+
+    fetchConfirmedGuests();
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem('adminLoggedIn');

@@ -3,9 +3,10 @@ import React, { useState } from 'react';
 
 interface CommentFormProps {
   onSubmit: (message: string) => void;
+  isSubmitting?: boolean; // Add isSubmitting prop
 }
 
-const CommentForm: React.FC<CommentFormProps> = ({ onSubmit }) => {
+const CommentForm: React.FC<CommentFormProps> = ({ onSubmit, isSubmitting = false }) => {
   const [message, setMessage] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -27,9 +28,10 @@ const CommentForm: React.FC<CommentFormProps> = ({ onSubmit }) => {
       ></textarea>
       <button
         type="submit"
-        className="mt-4 bg-deep-green hover:bg-opacity-90 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
+        className={`mt-4 bg-deep-green text-white font-bold py-3 px-8 rounded-lg shadow-lg transition duration-300 ease-in-out ${isSubmitting ? 'opacity-50 cursor-not-allowed' : 'hover:bg-opacity-90 transform hover:scale-105'}`}
+        disabled={isSubmitting}
       >
-        Post Comment
+        {isSubmitting ? 'Posting...' : 'Post Comment'}
       </button>
     </form>
   );

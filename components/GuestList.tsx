@@ -1,53 +1,43 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Guest } from '../types';
 import ConfirmationDialog from './ConfirmationDialog';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle, faTimesCircle, faHourglassHalf, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-
-// Dummy data for demonstration. In a real app, this would come from a global state or API.
-const initialGuests: Guest[] = [
-  {
-    id: 1,
-    name: 'John Doe',
-    status: 'Attending',
-    email: 'john.doe@example.com',
-  },
-  {
-    id: 2,
-    name: 'Jane Smith',
-    status: 'Not Attending',
-    email: 'jane.smith@example.com',
-  },
-  {
-    id: 3,
-    name: 'Peter Jones',
-    status: 'Pending',
-    email: 'peter.jones@example.com',
-  },
-  {
-    id: 4,
-    name: 'Alice Brown',
-    status: 'Attending',
-    email: 'alice.brown@example.com',
-  },
-  {
-    id: 5,
-    name: 'Bob White',
-    status: 'Pending',
-    email: 'bob.white@example.com',
-  },
-];
+import { supabase } from '../supabaseClient';
+import GuestListSkeleton from './GuestListSkeleton';
 
 type SortKeys = keyof Guest;
 type SortDirection = 'asc' | 'desc';
 
 const GuestList: React.FC = () => {
-  const [guests, setGuests] = useState<Guest[]>(initialGuests);
+  const [guests, setGuests] = useState<Guest[]>([]);
   const [sortKey, setSortKey] = useState<SortKeys | null>(null);
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
   const [guestToDelete, setGuestToDelete] = useState<Guest | null>(null);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetchGuests();
+  }, []);
+
+  const fetchGuests = async () => {
+    setLoading(true);
+    const { data, error } = await supabase
+      .from('guests')
+      .select('id, name, status, email, plusoneqty, plusonename');
+
+    if (error) {
+      console.error('Error fetching guests:', error);
+      setError('Failed to load guests.');
+    } else {
+      setGuests(data as Guest[]);
+    }
+    setLoading(false);
+  };
+
 
   const filteredGuests = useMemo(() => {
     return guests.filter(guest =>
@@ -87,11 +77,11 @@ const GuestList: React.FC = () => {
 
   const getStatusClasses = (status: Guest['status']) => {
     switch (status) {
-      case 'Attending':
+      case 'attending':
         return 'bg-green-100 text-green-800';
-      case 'Not Attending':
+      case 'not_attending':
         return 'bg-red-100 text-red-800';
-      case 'Pending':
+      case 'pending':
         return 'bg-yellow-100 text-yellow-800';
       default:
         return '';
@@ -100,11 +90,11 @@ const GuestList: React.FC = () => {
 
   const getStatusIcon = (status: Guest['status']) => {
     switch (status) {
-      case 'Attending':
+      case 'attending':
         return <FontAwesomeIcon icon={faCheckCircle} className="mr-1" />;
-      case 'Not Attending':
+      case 'not_attending':
         return <FontAwesomeIcon icon={faTimesCircle} className="mr-1" />;
-      case 'Pending':
+      case 'pending':
         return <FontAwesomeIcon icon={faHourglassHalf} className="mr-1" />;
       default:
         return null;
@@ -116,11 +106,21 @@ const GuestList: React.FC = () => {
     setIsDeleteDialogOpen(true);
   };
 
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     if (guestToDelete) {
-      setGuests(guests.filter((guest) => guest.id !== guestToDelete.id));
-      setGuestToDelete(null);
-      setIsDeleteDialogOpen(false);
+      const { error } = await supabase
+        .from('guests')
+        .delete()
+        .eq('id', guestToDelete.id);
+
+      if (error) {
+        console.error('Error deleting guest:', error);
+        setError('Failed to delete guest.');
+      } else {
+        setGuests(guests.filter((guest) => guest.id !== guestToDelete.id));
+        setGuestToDelete(null);
+        setIsDeleteDialogOpen(false);
+      }
     }
   };
 
@@ -128,6 +128,14 @@ const GuestList: React.FC = () => {
     setGuestToDelete(null);
     setIsDeleteDialogOpen(false);
   };
+
+  if (loading) {
+    return <GuestListSkeleton />;
+  }
+
+  if (error) {
+    return <div className="text-center py-4 text-red-500">Error: {error}</div>;
+  }
 
   return (
     <div className="overflow-x-auto">
@@ -161,6 +169,18 @@ const GuestList: React.FC = () => {
             >
               Email {sortKey === 'email' && (sortDirection === 'asc' ? '▲' : '▼')}
             </th>
+            <th
+              className="py-2 px-2 sm:py-3 sm:px-4 border-b cursor-pointer text-left text-sm sm:text-base"
+              onClick={() => handleSort('plusoneqty')}
+            >
+              Plus One Qty {sortKey === 'plusoneqty' && (sortDirection === 'asc' ? '▲' : '▼')}
+            </th>
+            <th
+              className="py-2 px-2 sm:py-3 sm:px-4 border-b cursor-pointer text-left text-sm sm:text-base"
+              onClick={() => handleSort('plusonename')}
+            >
+              Plus One Name {sortKey === 'plusonename' && (sortDirection === 'asc' ? '▲' : '▼')}
+            </th>
             <th className="py-2 px-2 sm:py-3 sm:px-4 border-b text-center text-sm sm:text-base">Actions</th>
           </tr>
         </thead>
@@ -178,6 +198,8 @@ const GuestList: React.FC = () => {
                 </span>
               </td>
               <td className="py-2 px-2 sm:py-3 sm:px-4 border-b text-left text-sm sm:text-base">{guest.email}</td>
+              <td className="py-2 px-2 sm:py-3 sm:px-4 border-b text-left text-sm sm:text-base">{guest.plusoneqty}</td>
+              <td className="py-2 px-2 sm:py-3 sm:px-4 border-b text-left text-sm sm:text-base">{guest.plusonename || 'N/A'}</td>
               <td className="py-2 px-2 sm:py-3 sm:px-4 border-b text-center">
                 <button
                   onClick={() => handleDeleteClick(guest)}

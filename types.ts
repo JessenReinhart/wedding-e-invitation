@@ -14,10 +14,11 @@ export interface GalleryImage {
 }
 
 export interface Comment {
-  id: number;
+  id: string;
   author: string;
   message: string;
   timestamp: string;
+  isOptimistic?: boolean;
 }
 
 export interface WeddingDetails {
@@ -32,12 +33,13 @@ export interface WeddingDetails {
   rsvpByDate: string;
   galleryImages: GalleryImage[];
   footerMessage: string;
-  comments: Comment[];
 }
 
 export interface Guest {
-  id: number;
+  id: string;
   name: string;
-  status: 'Attending' | 'Not Attending' | 'Pending';
+  status: 'attending' | 'not_attending' | 'pending';
   email: string;
+  plusoneqty?: number;
+  plusonename?: string;
 }

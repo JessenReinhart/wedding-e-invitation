@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { supabase } from '../supabaseClient';
 
 const LoginPage: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -8,16 +9,19 @@ const LoginPage: React.FC = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
-    // Basic hardcoded authentication for demonstration
-    if (username === 'admin' && password === 'password') {
-      localStorage.setItem('adminLoggedIn', 'true'); // Simulate login
-      navigate('/admin');
+    const { error } = await supabase.auth.signInWithPassword({
+      email: username, // Assuming username is email for Supabase auth
+      password: password,
+    });
+
+    if (error) {
+      setError(error.message);
     } else {
-      setError('Invalid username or password');
+      navigate('/admin');
     }
   };
 

@@ -1,27 +1,57 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Comment } from '../types';
-import { WEDDING_DETAILS } from '../constants';
 import ConfirmationDialog from './ConfirmationDialog';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { supabase } from '../supabaseClient';
 
 const CommentManagement: React.FC = () => {
-  const [comments, setComments] = useState<Comment[]>(WEDDING_DETAILS.comments);
+  const [comments, setComments] = useState<Comment[]>([]);
   const [commentToDelete, setCommentToDelete] = useState<Comment | null>(null);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetchComments();
+  }, []);
+
+  const fetchComments = async () => {
+    setLoading(true);
+    const { data, error } = await supabase
+      .from('comments')
+      .select('id, author, message, timestamp')
+      .order('timestamp', { ascending: false });
+
+    if (error) {
+      console.error('Error fetching comments:', error);
+      setError('Failed to load comments.');
+    } else {
+      setComments(data as Comment[]);
+    }
+    setLoading(false);
+  };
 
   const handleDeleteClick = (comment: Comment) => {
     setCommentToDelete(comment);
     setIsDeleteDialogOpen(true);
   };
 
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     if (commentToDelete) {
-      setComments(comments.filter(comment => comment.id !== commentToDelete.id));
-      // In a real application, you would also send a request to your backend to delete the comment
-      console.log(`Deleting comment with ID: ${commentToDelete.id}`);
-      setCommentToDelete(null);
-      setIsDeleteDialogOpen(false);
+      const { error } = await supabase
+        .from('comments')
+        .delete()
+        .eq('id', commentToDelete.id);
+
+      if (error) {
+        console.error('Error deleting comment:', error);
+        setError('Failed to delete comment.');
+      } else {
+        setComments(comments.filter(comment => comment.id !== commentToDelete.id));
+        setCommentToDelete(null);
+        setIsDeleteDialogOpen(false);
+      }
     }
   };
 
@@ -29,6 +59,14 @@ const CommentManagement: React.FC = () => {
     setCommentToDelete(null);
     setIsDeleteDialogOpen(false);
   };
+
+  if (loading) {
+    return <div className="mt-8 p-2 sm:p-0 text-center">Loading comments...</div>;
+  }
+
+  if (error) {
+    return <div className="mt-8 p-2 sm:p-0 text-center text-red-500">Error: {error}</div>;
+  }
 
   return (
     <div className="mt-8 p-2 sm:p-0">

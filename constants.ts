@@ -34,25 +34,5 @@ export const WEDDING_DETAILS: WeddingDetails = {
     { src: "https://picsum.photos/seed/gallery5/800/600", alt: "Scenic view" },
     { src: "https://picsum.photos/seed/gallery6/800/600", alt: "Close-up detail" },
   ],
-  comments: [
-    {
-      id: 1,
-      author: "Aunt Carol",
-      message: "So thrilled for you both! Wishing you a lifetime of happiness.",
-      timestamp: "2024-06-25T10:00:00Z",
-    },
-    {
-      id: 2,
-      author: "John (from College)",
-      message: "Can't wait to celebrate with you guys! It's going to be an epic party.",
-      timestamp: "2024-06-24T15:30:00Z",
-    },
-    {
-      id: 3,
-      author: "Grandma Sue",
-      message: "My heart is so full. Seeing you two together brings me so much joy. All my love.",
-      timestamp: "2024-06-23T11:45:00Z",
-    },
-  ],
   footerMessage: "Made with love for our special day."
 };

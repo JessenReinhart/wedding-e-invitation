@@ -39,7 +39,7 @@ const App: React.FC = () => {
                 <RSVPSection rsvpDate={WEDDING_DETAILS.rsvpByDate} />
                 <GallerySection images={WEDDING_DETAILS.galleryImages} />
                 <MessageFromCouple brideName={WEDDING_DETAILS.brideName} groomName={WEDDING_DETAILS.groomName} />
-                <CommentSection initialComments={WEDDING_DETAILS.comments} />
+                <CommentSection />
               </>
             }
           />
