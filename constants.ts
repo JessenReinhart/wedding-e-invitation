@@ -1,4 +1,5 @@
 
+
 import { WeddingDetails } from './types';
 
 export const WEDDING_DETAILS: WeddingDetails = {
@@ -22,7 +23,6 @@ export const WEDDING_DETAILS: WeddingDetails = {
     address: "456 Celebration Avenue, Dreamville, CA",
     details: "Celebrate with us! An evening of dinner, dancing, and making memories to last a lifetime awaits."
   },
-  rsvpLink: "https://example.com/rsvp/jasmine-adam",
   rsvpByDate: "September 15, 2024",
   galleryImages: [
     { src: "https://picsum.photos/seed/gallery1/800/600", alt: "Couple smiling" },
@@ -34,3 +34,4 @@ export const WEDDING_DETAILS: WeddingDetails = {
   ],
   footerMessage: "Made with love for our special day."
 };
+

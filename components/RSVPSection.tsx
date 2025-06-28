@@ -1,14 +1,13 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import SectionWrapper from './SectionWrapper';
-import QRCodeDisplay from './QRCodeDisplay';
 
 interface RSVPSectionProps {
-  rsvpLink: string;
   rsvpDate: string;
 }
 
-const RSVPSection: React.FC<RSVPSectionProps> = ({ rsvpLink, rsvpDate }) => {
+const RSVPSection: React.FC<RSVPSectionProps> = ({ rsvpDate }) => {
   return (
     <SectionWrapper id="rsvp" className="bg-soft-blush">
       <div className="text-center animate-fade-in-up">
@@ -17,19 +16,16 @@ const RSVPSection: React.FC<RSVPSectionProps> = ({ rsvpLink, rsvpDate }) => {
           Please let us know if you can celebrate with us by <strong className="text-deep-green">{rsvpDate}</strong>.
         </p>
         <p className="text-md text-slate-600 mb-10">
-          You can scan the QR code below or click the button to access our RSVP form.
+          Click the button to access our RSVP form.
         </p>
         
         <div className="flex flex-col items-center space-y-8">
-          <QRCodeDisplay value={rsvpLink} />
-          <a
-            href={rsvpLink}
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to="/rsvp"
             className="inline-block bg-deep-green hover:bg-opacity-90 text-white font-semibold py-4 px-10 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105 text-lg"
           >
             RSVP Online
-          </a>
+          </Link>
         </div>
         <p className="mt-8 text-sm text-slate-500">
           We can't wait to share our special day with you!

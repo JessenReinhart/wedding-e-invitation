@@ -11,6 +11,7 @@ import GallerySection from './components/GallerySection';
 import Footer from './components/Footer';
 import MessageFromCouple from './components/MessageFromCouple';
 import AdminPage from './components/AdminPage';
+import RSVPPage from './components/RSVPPage';
 
 const App: React.FC = () => {
   return (
@@ -33,13 +34,14 @@ const App: React.FC = () => {
                   ceremony={WEDDING_DETAILS.ceremony}
                   reception={WEDDING_DETAILS.reception}
                 />
-                <RSVPSection rsvpLink={WEDDING_DETAILS.rsvpLink} rsvpDate={WEDDING_DETAILS.rsvpByDate} />
+                <RSVPSection rsvpDate={WEDDING_DETAILS.rsvpByDate} />
                 <GallerySection images={WEDDING_DETAILS.galleryImages} />
                 <MessageFromCouple brideName={WEDDING_DETAILS.brideName} groomName={WEDDING_DETAILS.groomName} />
               </>
             }
           />
           <Route path="/admin" element={<AdminPage />} />
+          <Route path="/rsvp" element={<RSVPPage />} />
         </Routes>
       </main>
       <Footer />
