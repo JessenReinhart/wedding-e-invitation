@@ -1,5 +1,5 @@
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { WEDDING_DETAILS } from './constants';
 import Header from './components/Header';
 import Hero from './components/Hero';
@@ -16,10 +16,24 @@ import LoginPage from './components/LoginPage';
 import PrivateRoute from './components/PrivateRoute';
 
 const App: React.FC = () => {
+  const [loading, setLoading] = useState(true);
+  const location = useLocation();
+
+  const handleHeroLoaded = () => {
+    setLoading(false);
+  };
+
+  const showLoader = loading && location.pathname === '/';
+
   return (
     <div className="min-h-screen bg-cream text-charcoal-gray antialiased">
+      {showLoader && (
+        <div className="fixed inset-0 flex items-center justify-center bg-cream z-50">
+          <div className="loader ease-linear rounded-full h-32 w-32"></div>
+        </div>
+      )}
       <Header brideName={WEDDING_DETAILS.brideName} groomName={WEDDING_DETAILS.groomName} />
-      <main>
+      <main className={showLoader ? 'hidden' : ''}>
         <Routes>
           <Route
             path="/"
@@ -30,6 +44,7 @@ const App: React.FC = () => {
                   groomName={WEDDING_DETAILS.groomName}
                   date={WEDDING_DETAILS.date}
                   heroImage={WEDDING_DETAILS.heroImage}
+                  onImageLoad={handleHeroLoaded}
                 />
                 <OurStory story={WEDDING_DETAILS.story} title={WEDDING_DETAILS.storyTitle} />
                 <EventTimeline

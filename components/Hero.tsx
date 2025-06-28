@@ -6,9 +6,10 @@ interface HeroProps {
   groomName: string;
   date: string;
   heroImage: string;
+  onImageLoad: () => void;
 }
 
-const Hero: React.FC<HeroProps> = ({ brideName, groomName, date, heroImage }) => {
+const Hero: React.FC<HeroProps> = ({ brideName, groomName, date, heroImage, onImageLoad }) => {
   const [blur, setBlur] = useState(0);
   const location = useLocation();
   const [visitorName, setVisitorName] = useState<string | null>(null);
@@ -47,7 +48,9 @@ const Hero: React.FC<HeroProps> = ({ brideName, groomName, date, heroImage }) =>
           filter: `blur(${blur}px)`,
           transition: 'filter 0.1s ease-out'
         }}
-      ></div>
+      >
+        <img src={heroImage} alt="Hero" className="hidden" onLoad={onImageLoad} />
+      </div>
       <div className="absolute inset-0 bg-black opacity-40"></div>
       <div className="relative z-10 p-6 animate-fade-in-up">
         {visitorName && (
@@ -55,7 +58,7 @@ const Hero: React.FC<HeroProps> = ({ brideName, groomName, date, heroImage }) =>
             Dear {visitorName} & Partner,
           </h2>
         )}
-        <h2 className="font-serif text-3xl md:text-5xl mb-4">You're Invited To Celebrate The Wedding Of</h2>
+        <h2 className="font-serif text-3xl md::text-5xl mb-4">You're Invited To Celebrate The Wedding Of</h2>
         <h1 className="font-serif text-6xl md:text-8xl font-bold mb-2">
           {brideName} &amp; {groomName}
         </h1>
