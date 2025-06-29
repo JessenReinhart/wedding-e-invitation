@@ -1,27 +1,24 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from '../supabaseClient';
+import { useAuth } from '../hooks/useAuth';
 
 const LoginPage: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { signIn } = useAuth();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
-    const { error } = await supabase.auth.signInWithPassword({
-      email: username, // Assuming username is email for Supabase auth
-      password: password,
-    });
-
-    if (error) {
-      setError(error.message);
-    } else {
+    try {
+      await signIn(username, password);
       navigate('/admin');
+    } catch (error: any) {
+      setError(error.message);
     }
   };
 

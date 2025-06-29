@@ -15,6 +15,8 @@ import CommentSection from './components/CommentSection';
 import LoginPage from './components/LoginPage';
 import PrivateRoute from './components/PrivateRoute';
 
+import { Toaster } from 'react-hot-toast';
+
 const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const location = useLocation();
@@ -32,6 +34,7 @@ const App: React.FC = () => {
           <div className="loader ease-linear rounded-full h-32 w-32"></div>
         </div>
       )}
+      <Toaster />
       <Header brideName={WEDDING_DETAILS.brideName} groomName={WEDDING_DETAILS.groomName} />
       <main className={showLoader ? 'hidden' : ''}>
         <Routes>

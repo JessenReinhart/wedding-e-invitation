@@ -1,36 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Comment } from '../types';
 import ConfirmationDialog from './ConfirmationDialog';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-import { supabase } from '../supabaseClient';
+import { useComments } from '../hooks/useComments';
 
 const CommentManagement: React.FC = () => {
-  const [comments, setComments] = useState<Comment[]>([]);
+  const { comments, loading, error, deleteComment } = useComments();
   const [commentToDelete, setCommentToDelete] = useState<Comment | null>(null);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    fetchComments();
-  }, []);
-
-  const fetchComments = async () => {
-    setLoading(true);
-    const { data, error } = await supabase
-      .from('comments')
-      .select('id, author, message, timestamp')
-      .order('timestamp', { ascending: false });
-
-    if (error) {
-      console.error('Error fetching comments:', error);
-      setError('Failed to load comments.');
-    } else {
-      setComments(data as Comment[]);
-    }
-    setLoading(false);
-  };
 
   const handleDeleteClick = (comment: Comment) => {
     setCommentToDelete(comment);
@@ -39,18 +17,12 @@ const CommentManagement: React.FC = () => {
 
   const confirmDelete = async () => {
     if (commentToDelete) {
-      const { error } = await supabase
-        .from('comments')
-        .delete()
-        .eq('id', commentToDelete.id);
-
-      if (error) {
-        console.error('Error deleting comment:', error);
-        setError('Failed to delete comment.');
-      } else {
-        setComments(comments.filter(comment => comment.id !== commentToDelete.id));
+      try {
+        await deleteComment(commentToDelete.id);
         setCommentToDelete(null);
         setIsDeleteDialogOpen(false);
+      } catch (error) {
+        // Error is already handled in the hook
       }
     }
   };

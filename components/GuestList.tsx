@@ -1,43 +1,21 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Guest } from '../types';
 import ConfirmationDialog from './ConfirmationDialog';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle, faTimesCircle, faHourglassHalf, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-import { supabase } from '../supabaseClient';
+import { useGuests } from '../hooks/useGuests';
 import GuestListSkeleton from './GuestListSkeleton';
 
 type SortKeys = keyof Guest;
 type SortDirection = 'asc' | 'desc';
 
 const GuestList: React.FC = () => {
-  const [guests, setGuests] = useState<Guest[]>([]);
+  const { guests, loading, error, deleteGuest } = useGuests();
   const [sortKey, setSortKey] = useState<SortKeys | null>(null);
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
   const [guestToDelete, setGuestToDelete] = useState<Guest | null>(null);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    fetchGuests();
-  }, []);
-
-  const fetchGuests = async () => {
-    setLoading(true);
-    const { data, error } = await supabase
-      .from('guests')
-      .select('id, name, status, email, plusoneqty, plusonename');
-
-    if (error) {
-      console.error('Error fetching guests:', error);
-      setError('Failed to load guests.');
-    } else {
-      setGuests(data as Guest[]);
-    }
-    setLoading(false);
-  };
-
 
   const filteredGuests = useMemo(() => {
     return guests.filter(guest =>
@@ -108,18 +86,12 @@ const GuestList: React.FC = () => {
 
   const confirmDelete = async () => {
     if (guestToDelete) {
-      const { error } = await supabase
-        .from('guests')
-        .delete()
-        .eq('id', guestToDelete.id);
-
-      if (error) {
-        console.error('Error deleting guest:', error);
-        setError('Failed to delete guest.');
-      } else {
-        setGuests(guests.filter((guest) => guest.id !== guestToDelete.id));
+      try {
+        await deleteGuest(guestToDelete.id);
         setGuestToDelete(null);
         setIsDeleteDialogOpen(false);
+      } catch (error) {
+        // Error is already handled in the hook, but you can add component-specific error handling here if needed
       }
     }
   };

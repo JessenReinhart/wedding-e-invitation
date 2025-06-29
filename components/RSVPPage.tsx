@@ -1,61 +1,53 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { supabase } from '../supabaseClient';
+import { useRSVP } from '../hooks/useRSVP';
 
 const RSVPPage: React.FC = () => {
   const location = useLocation();
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [status, setStatus] = useState<'attending' | 'not_attending' | 'pending' | null>(null);
-  const [guests, setGuests] = useState(1);
+  interface RSVPFormData {
+    name: string;
+    email: string;
+    status: 'attending' | 'not_attending' | 'pending' | null;
+    guests: number;
+    message: string;
+  }
 
-
-  const [message, setMessage] = useState('');
+  const [formData, setFormData] = useState<RSVPFormData>({
+    name: '',
+    email: '',
+    status: null,
+    guests: 1,
+    message: '',
+  });
   const [submitted, setSubmitted] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
+  const { submitting, submitRSVP } = useRSVP();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const visitorName = params.get('name');
     if (visitorName) {
-      setName(visitorName);
+      setFormData((prev) => ({ ...prev, name: visitorName }));
     }
   }, [location.search]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitting(true);
-
-    const { error: rsvpError } = await supabase
-      .from('guests')
-      .insert({
-        name,
-        email,
-        status: status || 'pending',
-        plusoneqty: guests
-      });
-
-    if (rsvpError) {
-      console.error('Error submitting RSVP:', rsvpError);
-      // Optionally, set an error state to display to the user
-    } else {
-      // If there's a message, submit it to the comments table
-      if (message.trim()) {
-        const { error: commentError } = await supabase
-          .from('comments')
-          .insert({
-            author: name,
-            message,
-            timestamp: new Date().toISOString(),
-          });
-
-        if (commentError) {
-          console.error('Error posting comment from RSVP:', commentError);
-        }
-      }
+    try {
+      await submitRSVP(
+        formData.name,
+        formData.email,
+        formData.status || 'pending',
+        formData.guests,
+        formData.message
+      );
       setSubmitted(true);
+    } catch (error) {
+      // Error is handled in the hook
     }
-    setSubmitting(false);
   };
 
   if (submitted) {
@@ -88,8 +80,8 @@ const RSVPPage: React.FC = () => {
             <input
               type="text"
               id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={formData.name}
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               required
               className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-rose-gold focus:border-transparent transition"
               placeholder="Your full name"
@@ -103,8 +95,8 @@ const RSVPPage: React.FC = () => {
             <input
               type="email"
               id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-rose-gold focus:border-transparent transition"
               placeholder="your.email@example.com"
             />
@@ -118,8 +110,8 @@ const RSVPPage: React.FC = () => {
                   type="radio"
                   name="attending"
                   value="yes"
-                  checked={status === 'attending'}
-                  onChange={() => setStatus('attending')}
+                  checked={formData.status === 'attending'}
+                  onChange={() => setFormData({ ...formData, status: 'attending' })}
                   required
                   className="h-5 w-5 text-deep-green focus:ring-rose-gold"
                 />
@@ -130,8 +122,8 @@ const RSVPPage: React.FC = () => {
                   type="radio"
                   name="attending"
                   value="no"
-                  checked={status === 'not_attending'}
-                  onChange={() => setStatus('not_attending')}
+                  checked={formData.status === 'not_attending'}
+                  onChange={() => setFormData({ ...formData, status: 'not_attending' })}
                   required
                   className="h-5 w-5 text-deep-green focus:ring-rose-gold"
                 />
@@ -142,8 +134,8 @@ const RSVPPage: React.FC = () => {
                   type="radio"
                   name="attending"
                   value="pending"
-                  checked={status === 'pending'}
-                  onChange={() => setStatus('pending')}
+                  checked={formData.status === 'pending'}
+                  onChange={() => setFormData({ ...formData, status: 'pending' })}
                   required
                   className="h-5 w-5 text-deep-green focus:ring-rose-gold"
                 />
@@ -152,7 +144,7 @@ const RSVPPage: React.FC = () => {
             </div>
           </fieldset>
 
-          {status === 'attending' && (
+          {formData.status === 'attending' && (
             <>
               <div>
                 <label htmlFor="guests" className="block text-md font-semibold text-charcoal-gray mb-2">
@@ -161,8 +153,8 @@ const RSVPPage: React.FC = () => {
                 <input
                   type="number"
                   id="guests"
-                  value={guests}
-                  onChange={(e) => setGuests(parseInt(e.target.value, 10))}
+                  value={formData.guests}
+                  onChange={(e) => setFormData({ ...formData, guests: parseInt(e.target.value, 10) })}
                   min="1"
                   max="10"
                   required
@@ -178,8 +170,8 @@ const RSVPPage: React.FC = () => {
             </label>
             <textarea
               id="message"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
+              value={formData.message}
+              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
               rows={4}
               className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-rose-gold focus:border-transparent transition"
               placeholder="Share a memory or well wishes..."

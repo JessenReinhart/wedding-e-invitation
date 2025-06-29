@@ -65,7 +65,7 @@ const Header: React.FC<HeaderProps> = ({ brideName, groomName }) => {
   const headerClasses = `fixed z-50 transition-all duration-300
     ${isMobile ? 'bottom-4 inset-x-4 rounded-xl' : 'top-0 left-0 right-0 w-full'}
     ${isNavbarContentVisible ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}
-    ${applyScrolledStyle ? 'bg-cream/80 shadow-lg backdrop-blur-sm py-3' : 'bg-transparent py-6'}
+    ${applyScrolledStyle ? 'bg-cream/80 shadow-lg backdrop-blur-sm py-3' : 'bg-transparent py-3'}
   `;
 
   const logoTextColor = applyScrolledStyle ? 'text-rose-gold' : 'text-white';
@@ -75,7 +75,7 @@ const Header: React.FC<HeaderProps> = ({ brideName, groomName }) => {
 
   return (
     <header className={headerClasses}>
-      <div className={`container mx-auto max-w-6xl flex justify-around md:justify-between items-center px-4 md:px-6 md:py-0
+      <div className={`container mx-auto max-w-6xl flex justify-around md:justify-between items-center px-4 md:px-6
         ${applyScrolledStyle ? 'py-3' : 'py-0'}
       `}>
         <a
