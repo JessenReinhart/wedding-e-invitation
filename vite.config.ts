@@ -12,6 +12,19 @@ export default defineConfig(({ mode }) => {
         alias: {
           '@': path.resolve(__dirname, '.'),
         }
-      }
+      },
+      build: {
+        sourcemap: false, // Disable sourcemaps for production
+        minify: true, // Enable minification
+        rollupOptions: {
+          output: {
+            manualChunks: (id) => {
+              if (id.includes('node_modules')) {
+                return 'vendor'; // Group all node_modules into a single vendor chunk
+              }
+            },
+          },
+        },
+      },
     };
 });
