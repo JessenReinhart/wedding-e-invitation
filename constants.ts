@@ -2,7 +2,11 @@ import { WeddingDetails } from './types';
 
 export const WEDDING_DETAILS: WeddingDetails = {
   brideName: "Angel",
+  brideDob: "January 1, 1995",
+  brideImage: "https://picsum.photos/seed/bride/400/400",
   groomName: "Matthew",
+  groomDob: "February 14, 1993",
+  groomImage: "https://picsum.photos/seed/groom/400/400",
   date: "Saturday, October 26, 2024",
   heroImage: "https://picsum.photos/seed/wedding_hero/1920/1080",
   storyTitle: "Our Love Story",

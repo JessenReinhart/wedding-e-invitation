@@ -16,6 +16,7 @@ import LoginPage from './components/LoginPage';
 import PrivateRoute from './components/PrivateRoute';
 
 import { Toaster } from 'react-hot-toast';
+import BrideGroomSection from './components/BrideGroomSection';
 
 const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
@@ -49,6 +50,14 @@ const App: React.FC = () => {
                   heroImage={WEDDING_DETAILS.heroImage}
                   onImageLoad={handleHeroLoaded}
                 />
+                <BrideGroomSection
+                  brideName={WEDDING_DETAILS.brideName}
+                  brideDob={WEDDING_DETAILS.brideDob}
+                  brideImage={WEDDING_DETAILS.brideImage}
+                  groomName={WEDDING_DETAILS.groomName}
+                  groomDob={WEDDING_DETAILS.groomDob}
+                  groomImage={WEDDING_DETAILS.groomImage}
+                />
                 <OurStory story={WEDDING_DETAILS.story} title={WEDDING_DETAILS.storyTitle} />
                 <EventTimeline
                   ceremony={WEDDING_DETAILS.ceremony}
@@ -79,3 +88,4 @@ const App: React.FC = () => {
 };
 
 export default App;
+

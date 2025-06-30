@@ -50,6 +50,14 @@ const EventDetailsCard: React.FC<EventDetailsCardProps> = ({ event, icon }) => {
           </div>
         )}
       </div>
+      <a
+        href={`https://www.google.com/maps/dir/?api=1&destination=${event.latitude},${event.longitude}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-4 inline-block bg-deep-green hover:bg-opacity-90 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105"
+      >
+        Get Directions
+      </a>
     </div>
   );
 };

@@ -23,7 +23,11 @@ export interface Comment {
 
 export interface WeddingDetails {
   brideName: string;
+  brideDob: string;
+  brideImage: string;
   groomName: string;
+  groomDob: string;
+  groomImage: string;
   date: string;
   heroImage: string;
   storyTitle: string;

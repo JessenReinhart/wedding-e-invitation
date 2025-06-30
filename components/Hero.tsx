@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import AnimatedLeaves from './AnimatedLeaves';
 
 interface HeroProps {
   brideName: string;
@@ -44,7 +45,6 @@ const Hero: React.FC<HeroProps> = ({ brideName, groomName, date, heroImage, onIm
           backgroundImage: `url(${heroImage})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          backgroundAttachment: 'fixed',
           filter: `blur(${blur}px)`,
           transition: 'filter 0.1s ease-out'
         }}

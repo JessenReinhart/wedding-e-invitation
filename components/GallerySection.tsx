@@ -9,17 +9,16 @@ interface GallerySectionProps {
 
 const GallerySection: React.FC<GallerySectionProps> = ({ images }) => {
   return (
-    <SectionWrapper id="gallery" className="bg-cream">
+    <SectionWrapper id="gallery" className="bg-cream pattern-bg" title="Our Moments">
       <div className="text-center mb-16 animate-fade-in-up">
-        <h2 className="text-4xl md:text-5xl font-serif text-deep-green mb-4">Our Moments</h2>
         <p className="text-lg text-slate-600">A glimpse into our journey together.</p>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
         {images.map((image, index) => (
-          <GalleryImageItem 
-            key={index} 
-            src={image.src} 
-            alt={image.alt} 
+          <GalleryImageItem
+            key={index}
+            src={image.src}
+            alt={image.alt}
           />
         ))}
       </div>

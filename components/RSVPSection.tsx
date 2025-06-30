@@ -12,16 +12,15 @@ const RSVPSection: React.FC<RSVPSectionProps> = ({ rsvpDate }) => {
   const visitorName = params.get('name');
 
   return (
-    <SectionWrapper id="rsvp" className="bg-soft-blush">
+    <SectionWrapper id="rsvp" className="bg-soft-blush pattern2-bg" title="Kindly RSVP">
       <div className="text-center animate-fade-in-up">
-        <h2 className="text-4xl md:text-5xl font-serif text-rose-gold mb-6">Kindly RSVP</h2>
         <p className="text-lg md:text-xl text-charcoal-gray mb-4">
           Please let us know if you can celebrate with us by <strong className="text-deep-green">{rsvpDate}</strong>.
         </p>
         <p className="text-md text-slate-600 mb-10">
           Click the button to access our RSVP form.
         </p>
-        
+
         <div className="flex flex-col items-center space-y-8">
           <Link
             to={visitorName ? `/rsvp?name=${visitorName}` : "/rsvp"}

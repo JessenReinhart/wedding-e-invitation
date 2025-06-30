@@ -24,9 +24,8 @@ const ReceptionIcon: React.FC = () => (
 
 const EventTimeline: React.FC<EventTimelineProps> = ({ ceremony, reception }) => {
   return (
-    <SectionWrapper id="event" className="bg-cream">
+    <SectionWrapper id="event" className="bg-cream pattern-bg" title="Event Details">
       <div className="text-center mb-16 animate-fade-in-up">
-        <h2 className="text-4xl md:text-5xl font-serif text-deep-green mb-4">Event Details</h2>
         <p className="text-lg text-slate-600">Join us for these special moments.</p>
       </div>
       <div className="grid md:grid-cols-2 gap-10 md:gap-12 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>

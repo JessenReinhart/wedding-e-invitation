@@ -21,9 +21,8 @@ const CommentSection: React.FC = () => {
   };
 
   return (
-    <SectionWrapper id="comments" className="bg-cream">
+    <SectionWrapper id="comments" className="bg-cream pattern-bg" title="Guest Comments">
       <div className="text-center">
-        <h2 className="text-4xl md:text-5xl font-serif text-rose-gold mb-6">Guest Comments</h2>
         <p className="text-lg md:text-xl text-charcoal-gray mb-8">
           Leave a message for the happy couple!
         </p>
