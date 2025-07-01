@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import AnimatedLeaves from './AnimatedLeaves';
 
 interface HeroProps {
   brideName: string;
