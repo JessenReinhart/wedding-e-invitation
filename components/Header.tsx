@@ -2,28 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBookOpen, faCalendarAlt, faEnvelopeOpenText, faImages, faHome } from '@fortawesome/free-solid-svg-icons';
+import MusicPlayer from './MusicPlayer';
 
 interface HeaderProps {
   brideName: string;
   groomName: string;
+  isMobile: boolean;
 }
 
-const Header: React.FC<HeaderProps> = ({ brideName, groomName }) => {
+const Header: React.FC<HeaderProps> = ({ brideName, groomName, isMobile }) => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
   const initials = `${brideName.charAt(0)} & ${groomName.charAt(0)}`;
   const location = useLocation();
   const isAdminPage = location.pathname.startsWith('/admin');
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768); // Tailwind's 'md' breakpoint
-    };
-
-    handleResize(); // Set initial state
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -119,6 +110,11 @@ const Header: React.FC<HeaderProps> = ({ brideName, groomName }) => {
                 <span className="text-xs md:text-base">Gallery</span>
               </a>
             </li>
+            {isMobile && (
+              <li className="px-2">
+                <MusicPlayer className={`flex flex-col items-center ${navLinkTextColor} ${navLinkHoverTextColor} font-medium transition-colors`} />
+              </li>
+            )}
           </ul>
         </nav>
       </div>
