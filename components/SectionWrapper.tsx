@@ -39,7 +39,7 @@ const SectionWrapper: React.FC<SectionWrapperProps> = ({ children, className = '
         {title && (
           <div className="flex items-center justify-center mb-12">
             <div className={`flex-grow border-t border-rose-gold ${inView ? 'line-expand line-expand-left' : ''}`}></div>
-            <h2 className="text-4xl md:text-5xl font-serif text-rose-gold mx-8 text-center">{title}</h2>
+            <h2 className="text-2xl md:text-5xl font-serif text-rose-gold mx-4 md:mx-8 text-center">{title}</h2>
             <div className={`flex-grow border-t border-rose-gold ${inView ? 'line-expand line-expand-right' : ''}`}></div>
           </div>
         )}

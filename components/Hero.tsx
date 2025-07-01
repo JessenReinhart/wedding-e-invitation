@@ -38,13 +38,14 @@ const Hero: React.FC<HeroProps> = ({ brideName, groomName, date, heroImage, onIm
   }, []);
 
   return (
-    <section id="hero" className="relative h-screen flex items-center justify-center text-center text-white">
+    <section id="hero" className="relative h-screen flex items-center justify-center text-center text-white overflow-hidden">
       <div
         className="absolute inset-0"
         style={{
           backgroundImage: `url(${heroImage})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
+          transform: `scale(${1 + blur / 100})`,
           filter: `blur(${blur}px)`,
           transition: 'filter 0.1s ease-out'
         }}
@@ -67,7 +68,7 @@ const Hero: React.FC<HeroProps> = ({ brideName, groomName, date, heroImage, onIm
           href="#story"
           onClick={(e) => {
             e.preventDefault();
-            const storyElement = document.getElementById('story');
+            const storyElement = document.getElementById('bride-groom');
             if (storyElement) {
               storyElement.scrollIntoView({ behavior: 'smooth' });
             }
