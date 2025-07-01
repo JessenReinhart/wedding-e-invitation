@@ -2,22 +2,35 @@ import { useState, useEffect } from 'react';
 import { supabase } from '../supabaseClient';
 import { Comment } from '../types';
 import toast from 'react-hot-toast';
+import useDebounce from './useDebounce';
 
-export const useComments = () => {
+export const useComments = (page: number, pageSize: number, searchTerm: string) => {
   const [comments, setComments] = useState<Comment[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [totalComments, setTotalComments] = useState(0);
+
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
   useEffect(() => {
     fetchComments();
-  }, []);
+  }, [page, pageSize, debouncedSearchTerm]);
 
   const fetchComments = async () => {
     setLoading(true);
-    const { data, error } = await supabase
+    const startIndex = (page - 1) * pageSize;
+    const endIndex = startIndex + pageSize - 1;
+
+    let query = supabase
       .from('comments')
-      .select('id, author, message, timestamp')
+      .select('id, author, message, timestamp', { count: 'exact' })
       .order('timestamp', { ascending: false });
+
+    if (debouncedSearchTerm) {
+      query = query.or(`message.ilike.%${debouncedSearchTerm}%,author.ilike.%${debouncedSearchTerm}%`);
+    }
+
+    const { data, error, count } = await query.range(startIndex, endIndex);
 
     if (error) {
       console.error('Error fetching comments:', error);
@@ -25,6 +38,7 @@ export const useComments = () => {
       toast.error('Failed to load comments.');
     } else {
       setComments(data as Comment[]);
+      setTotalComments(count || 0);
     }
     setLoading(false);
   };
@@ -44,12 +58,14 @@ export const useComments = () => {
       toast.error('Failed to post comment. Please try again.');
       throw error;
     } else if (data) {
-      setComments([data[0], ...comments]);
+      // Re-fetch comments to ensure pagination is correct after adding a new comment
+      await fetchComments();
       toast.success('Comment posted successfully.');
     }
   };
 
   const deleteComment = async (id: string) => {
+    console.log('Attempting to delete comment with ID:', id);
     const { error } = await supabase.from('comments').delete().eq('id', id);
 
     if (error) {
@@ -58,10 +74,11 @@ export const useComments = () => {
       toast.error('Failed to delete comment.');
       throw error;
     } else {
-      setComments(comments.filter((comment) => comment.id !== id));
+      // Re-fetch comments to ensure pagination is correct after deleting a comment
+      await fetchComments();
       toast.success('Comment deleted successfully.');
     }
   };
 
-  return { comments, loading, error, fetchComments, addComment, deleteComment };
+  return { comments, loading, error, totalComments, addComment, deleteComment };
 };

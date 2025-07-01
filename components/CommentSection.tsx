@@ -4,16 +4,26 @@ import CommentList from './CommentList';
 import CommentForm from './CommentForm';
 import SectionWrapper from './SectionWrapper';
 import { useComments } from '../hooks/useComments';
-import CommentSkeleton from './CommentSkeleton'; // Import the new skeleton component
+import CommentSkeleton from './CommentSkeleton';
+import Pagination from './Pagination';
 
 const CommentSection: React.FC = () => {
-  const { comments, loading, error, addComment } = useComments();
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 5; // Number of comments per page
+  const { comments, loading, error, totalComments, addComment } = useComments(currentPage, pageSize);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const totalPages = Math.ceil(totalComments / pageSize);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
 
   const handleCommentSubmit = async (message: string) => {
     setIsSubmitting(true);
     try {
       await addComment(message);
+      setCurrentPage(1); // Go back to the first page after adding a comment
     } catch (error) {
       // Error is already handled in the hook
     }
@@ -32,12 +42,19 @@ const CommentSection: React.FC = () => {
       <div className="mt-12">
         {loading ? (
           <div className="space-y-4">
-            {[...Array(3)].map((_, index) => (
+            {[...Array(pageSize)].map((_, index) => (
               <CommentSkeleton key={index} />
             ))}
           </div>
         ) : (
           <CommentList comments={comments} />
+        )}
+        {!loading && totalPages > 1 && (
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
         )}
       </div>
     </SectionWrapper>
