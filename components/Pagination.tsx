@@ -23,7 +23,7 @@ const Pagination: React.FC<PaginationProps> = ({
         disabled={currentPage === 1}
         className="px-4 py-2 border rounded-md bg-white text-charcoal-gray disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        Previous
+        Sebelumnya
       </button>
       {pageNumbers.map((number) => (
         <button
@@ -41,7 +41,7 @@ const Pagination: React.FC<PaginationProps> = ({
         disabled={currentPage === totalPages}
         className="px-4 py-2 border rounded-md bg-white text-charcoal-gray disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        Next
+        Selanjutnya
       </button>
     </nav>
   );

@@ -4,7 +4,7 @@ import { Comment } from '../types';
 import toast from 'react-hot-toast';
 import useDebounce from './useDebounce';
 
-export const useComments = (page: number, pageSize: number, searchTerm: string) => {
+export const useComments = (page: number, pageSize: number, searchTerm?: string) => {
   const [comments, setComments] = useState<Comment[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -34,8 +34,8 @@ export const useComments = (page: number, pageSize: number, searchTerm: string) 
 
     if (error) {
       console.error('Error fetching comments:', error);
-      setError('Failed to load comments.');
-      toast.error('Failed to load comments.');
+      setError('Gagal memuat komentar.');
+      toast.error('Gagal memuat komentar.');
     } else {
       setComments(data as Comment[]);
       setTotalComments(count || 0);
@@ -54,13 +54,13 @@ export const useComments = (page: number, pageSize: number, searchTerm: string) 
 
     if (error) {
       console.error('Error posting comment:', error);
-      setError('Failed to post comment. Please try again.');
-      toast.error('Failed to post comment. Please try again.');
+      setError('Gagal mengirim komentar. Silakan coba lagi.');
+      toast.error('Gagal mengirim komentar. Silakan coba lagi.');
       throw error;
     } else if (data) {
       // Re-fetch comments to ensure pagination is correct after adding a new comment
       await fetchComments();
-      toast.success('Comment posted successfully.');
+      toast.success('Komentar berhasil dikirim.');
     }
   };
 
@@ -70,13 +70,13 @@ export const useComments = (page: number, pageSize: number, searchTerm: string) 
 
     if (error) {
       console.error('Error deleting comment:', error);
-      setError('Failed to delete comment.');
-      toast.error('Failed to delete comment.');
+      setError('Gagal menghapus komentar.');
+      toast.error('Gagal menghapus komentar.');
       throw error;
     } else {
       // Re-fetch comments to ensure pagination is correct after deleting a comment
       await fetchComments();
-      toast.success('Comment deleted successfully.');
+      toast.success('Komentar berhasil dihapus.');
     }
   };
 

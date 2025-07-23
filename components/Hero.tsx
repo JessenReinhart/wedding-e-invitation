@@ -55,10 +55,10 @@ const Hero: React.FC<HeroProps> = ({ brideName, groomName, date, heroImage, onIm
       <div className="relative z-10 p-6 animate-fade-in-up">
         {visitorName && (
           <h2 className="font-serif text-xl md:text-3xl mb-4">
-            Dear {visitorName} & Partner,
+            Kepada {visitorName} & Pasangan,
           </h2>
         )}
-        <h2 className="font-serif text-3xl md::text-5xl mb-4">You're Invited To Celebrate The Wedding Of</h2>
+        <h2 className="font-serif text-3xl md::text-5xl mb-4">Anda Diundang Untuk Merayakan Pernikahan</h2>
         <h1 className="font-serif text-6xl md:text-8xl font-bold mb-2">
           {brideName} &amp; {groomName}
         </h1>
@@ -74,7 +74,7 @@ const Hero: React.FC<HeroProps> = ({ brideName, groomName, date, heroImage, onIm
           }}
           className="mt-4 inline-block bg-rose-gold hover:bg-opacity-80 text-white font-semibold py-3 px-8 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105"
         >
-          Discover More
+          Selengkapnya
         </a>
       </div>
       <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-pulse-slow">

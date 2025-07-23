@@ -23,7 +23,7 @@ const CommentForm: React.FC<CommentFormProps> = ({ onSubmit, isSubmitting = fals
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-rose-gold focus:border-transparent transition"
-        placeholder="Leave a message for the couple..."
+        placeholder="Tinggalkan pesan untuk pasangan..."
         rows={4}
       ></textarea>
       <button
@@ -31,7 +31,7 @@ const CommentForm: React.FC<CommentFormProps> = ({ onSubmit, isSubmitting = fals
         className={`mt-4 bg-deep-green text-white font-bold py-3 px-8 rounded-lg shadow-lg transition duration-300 ease-in-out ${isSubmitting ? 'opacity-50 cursor-not-allowed' : 'hover:bg-opacity-90 transform hover:scale-105'}`}
         disabled={isSubmitting}
       >
-        {isSubmitting ? 'Posting...' : 'Post Comment'}
+        {isSubmitting ? 'Mengirim...' : 'Kirim Komentar'}
       </button>
     </form>
   );

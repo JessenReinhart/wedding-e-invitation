@@ -46,7 +46,7 @@ const EventDetailsCard: React.FC<EventDetailsCardProps> = ({ event, icon }) => {
           </GoogleMap>
         ) : (
           <div className="flex items-center justify-center h-full bg-gray-200 text-gray-600">
-            Loading Map...
+            Memuat Peta...
           </div>
         )}
       </div>
@@ -56,7 +56,7 @@ const EventDetailsCard: React.FC<EventDetailsCardProps> = ({ event, icon }) => {
         rel="noopener noreferrer"
         className="mt-4 inline-block bg-deep-green hover:bg-opacity-90 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105"
       >
-        Get Directions
+        Petunjuk Arah
       </a>
     </div>
   );

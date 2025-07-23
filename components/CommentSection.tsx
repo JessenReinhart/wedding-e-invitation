@@ -31,10 +31,10 @@ const CommentSection: React.FC = () => {
   };
 
   return (
-    <SectionWrapper id="comments" className="bg-cream pattern-bg" title="Guest Comments">
+    <SectionWrapper id="comments" className="bg-cream pattern-bg" title="Komentar Tamu">
       <div className="text-center">
         <p className="text-lg md:text-xl text-charcoal-gray mb-8">
-          Leave a message for the happy couple!
+          Tinggalkan pesan untuk pasangan bahagia!
         </p>
       </div>
       <CommentForm onSubmit={handleCommentSubmit} isSubmitting={isSubmitting} />

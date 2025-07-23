@@ -12,13 +12,13 @@ const RSVPSection: React.FC<RSVPSectionProps> = ({ rsvpDate }) => {
   const visitorName = params.get('name');
 
   return (
-    <SectionWrapper id="rsvp" className="bg-soft-blush pattern2-bg" title="Kindly RSVP">
+    <SectionWrapper id="rsvp" className="bg-soft-blush pattern2-bg" title="Mohon Konfirmasi Kehadiran">
       <div className="text-center animate-fade-in-up">
         <p className="text-lg md:text-xl text-charcoal-gray mb-4">
-          Please let us know if you can celebrate with us by <strong className="text-deep-green">{rsvpDate}</strong>.
+          Mohon beri tahu kami apakah Anda dapat merayakan bersama kami sebelum <strong className="text-deep-green">{rsvpDate}</strong>.
         </p>
         <p className="text-md text-slate-600 mb-10">
-          Click the button to access our RSVP form.
+          Klik tombol untuk mengakses formulir RSVP kami.
         </p>
 
         <div className="flex flex-col items-center space-y-8">
@@ -30,7 +30,7 @@ const RSVPSection: React.FC<RSVPSectionProps> = ({ rsvpDate }) => {
           </Link>
         </div>
         <p className="mt-8 text-sm text-slate-500">
-          We can't wait to share our special day with you!
+          Kami tidak sabar untuk berbagi hari istimewa kami dengan Anda!
         </p>
       </div>
     </SectionWrapper>

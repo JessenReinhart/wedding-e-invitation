@@ -9,7 +9,7 @@ interface MessageFromCoupleProps {
 
 const MessageFromCouple: React.FC<MessageFromCoupleProps> = ({ brideName, groomName }) => {
   return (
-    <SectionWrapper className="bg-soft-blush text-center pattern2-bg" title="With All Our Love,">
+    <SectionWrapper className="bg-soft-blush text-center pattern2-bg" title="Dengan Segenap Cinta Kami,">
       <div className="animate-fade-in-up">
         <p className="text-4xl font-serif text-deep-green font-semibold">
           {brideName} & {groomName}

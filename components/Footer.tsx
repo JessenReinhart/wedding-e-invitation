@@ -10,7 +10,7 @@ const Footer: React.FC = () => {
       <div className="container mx-auto px-6">
         <p className="font-serif text-lg mb-2">{WEDDING_DETAILS.brideName} & {WEDDING_DETAILS.groomName}</p>
         <p className="text-sm mb-4">{WEDDING_DETAILS.footerMessage}</p>
-        <p className="text-xs">&copy; {currentYear} All Rights Reserved. Created with joy.</p>
+        <p className="text-xs">&copy; {currentYear} Semua Hak Dilindungi. Dibuat dengan kegembiraan.</p>
       </div>
     </footer>
   );

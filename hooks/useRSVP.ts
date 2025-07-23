@@ -16,8 +16,8 @@ export const useRSVP = () => {
 
     if (rsvpError) {
       console.error('Error submitting RSVP:', rsvpError);
-      setError('Failed to submit RSVP.');
-      toast.error('Failed to submit RSVP.');
+      setError('Gagal mengirim RSVP.');
+      toast.error('Gagal mengirim RSVP.');
       setSubmitting(false);
       throw rsvpError;
     }
@@ -29,13 +29,13 @@ export const useRSVP = () => {
 
       if (commentError) {
         console.error('Error posting comment from RSVP:', commentError);
-        toast.error('Failed to post comment, but your RSVP was submitted.');
+        toast.error('Gagal mengirim komentar, tetapi RSVP Anda telah dikirim.');
         // Don't block the RSVP submission if the comment fails
       }
     }
 
     setSubmitting(false);
-    toast.success('RSVP submitted successfully!');
+    toast.success('RSVP berhasil dikirim!');
   };
 
   return { submitting, error, submitRSVP };

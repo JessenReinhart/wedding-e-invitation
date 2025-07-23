@@ -21,6 +21,13 @@ export interface Comment {
   isOptimistic?: boolean;
 }
 
+export interface PartnerDetails {
+  fullName: string;
+  parentInfo: string;
+  image: string;
+  instagramHandle: string;
+}
+
 export interface WeddingDetails {
   brideName: string;
   brideDob: string;
@@ -37,6 +44,8 @@ export interface WeddingDetails {
   rsvpByDate: string;
   galleryImages: GalleryImage[];
   footerMessage: string;
+  groomDetails: PartnerDetails;
+  brideDetails: PartnerDetails;
 }
 
 export interface Guest {

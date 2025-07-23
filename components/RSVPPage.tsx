@@ -54,10 +54,10 @@ const RSVPPage: React.FC = () => {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-cream p-8">
         <div className="text-center">
-          <h1 className="text-4xl font-serif text-deep-green mb-4">Thank You!</h1>
-          <p className="text-lg text-charcoal-gray mb-8">Your RSVP has been received.</p>
+          <h1 className="text-4xl font-serif text-deep-green mb-4">Terima Kasih!</h1>
+          <p className="text-lg text-charcoal-gray mb-8">RSVP Anda telah diterima.</p>
           <Link to="/" className="text-rose-gold hover:underline">
-            &larr; Back to Home
+            &larr; Kembali ke Beranda
           </Link>
         </div>
       </div>
@@ -69,13 +69,13 @@ const RSVPPage: React.FC = () => {
       <div className="w-full max-w-2xl mx-auto bg-white p-8 sm:p-12 rounded-xl shadow-2xl">
         <div className="text-center mb-10">
           <h1 className="text-4xl sm:text-5xl font-serif text-deep-green">RSVP</h1>
-          <p className="text-lg text-slate-600 mt-2">We're so excited to celebrate with you!</p>
+          <p className="text-lg text-slate-600 mt-2">Kami sangat senang dapat merayakan bersama Anda!</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label htmlFor="name" className="block text-md font-semibold text-charcoal-gray mb-2">
-              Full Name
+              Nama Lengkap
             </label>
             <input
               type="text"
@@ -84,13 +84,13 @@ const RSVPPage: React.FC = () => {
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               required
               className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-rose-gold focus:border-transparent transition"
-              placeholder="Your full name"
+              placeholder="Nama lengkap Anda"
             />
           </div>
 
           <div>
             <label htmlFor="email" className="block text-md font-semibold text-charcoal-gray mb-2">
-              Email Address (Optional)
+              Alamat Email (Opsional)
             </label>
             <input
               type="email"
@@ -103,7 +103,7 @@ const RSVPPage: React.FC = () => {
           </div>
 
           <fieldset className="space-y-4">
-            <legend className="block text-md font-semibold text-charcoal-gray mb-2">Will you be attending?</legend>
+            <legend className="block text-md font-semibold text-charcoal-gray mb-2">Apakah Anda akan hadir?</legend>
             <div className="flex items-center space-x-6">
               <label className="flex items-center space-x-2 cursor-pointer">
                 <input
@@ -115,7 +115,7 @@ const RSVPPage: React.FC = () => {
                   required
                   className="h-5 w-5 text-deep-green focus:ring-rose-gold"
                 />
-                <span className="text-sm">Yes, I'll be there!</span>
+                <span className="text-sm">Ya, saya akan hadir!</span>
               </label>
               <label className="flex items-center space-x-2 cursor-pointer">
                 <input
@@ -127,7 +127,7 @@ const RSVPPage: React.FC = () => {
                   required
                   className="h-5 w-5 text-deep-green focus:ring-rose-gold"
                 />
-                <span className="text-sm">No, I'll celebrate from afar.</span>
+                <span className="text-sm">Tidak, saya akan merayakan dari jauh.</span>
               </label>
               <label className="flex items-center space-x-2 cursor-pointer">
                 <input
@@ -139,7 +139,7 @@ const RSVPPage: React.FC = () => {
                   required
                   className="h-5 w-5 text-deep-green focus:ring-rose-gold"
                 />
-                <span className="text-sm">Maybe, I'm not sure yet.</span>
+                <span className="text-sm">Mungkin, saya belum yakin.</span>
               </label>
             </div>
           </fieldset>
@@ -148,7 +148,7 @@ const RSVPPage: React.FC = () => {
             <>
               <div>
                 <label htmlFor="guests" className="block text-md font-semibold text-charcoal-gray mb-2">
-                  Number of Guests (including yourself)
+                  Jumlah Tamu (termasuk Anda)
                 </label>
                 <input
                   type="number"
@@ -166,7 +166,7 @@ const RSVPPage: React.FC = () => {
 
           <div>
             <label htmlFor="message" className="block text-md font-semibold text-charcoal-gray mb-2">
-              Leave a message for the couple (optional)
+              Tinggalkan pesan untuk pasangan (opsional)
             </label>
             <textarea
               id="message"
@@ -174,7 +174,7 @@ const RSVPPage: React.FC = () => {
               onChange={(e) => setFormData({ ...formData, message: e.target.value })}
               rows={4}
               className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-rose-gold focus:border-transparent transition"
-              placeholder="Share a memory or well wishes..."
+              placeholder="Bagikan kenangan atau ucapan selamat..."
             ></textarea>
           </div>
 
@@ -184,14 +184,14 @@ const RSVPPage: React.FC = () => {
               className="w-full sm:w-auto bg-deep-green hover:bg-opacity-90 text-white font-bold py-4 px-12 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
               disabled={submitting}
             >
-              {submitting ? 'Submitting...' : 'Submit RSVP'}
+              {submitting ? 'Mengirim...' : 'Kirim RSVP'}
             </button>
           </div>
         </form>
 
         <div className="text-center mt-8">
           <Link to="/" className="text-sm text-rose-gold hover:underline">
-            &larr; Return to the main site
+            &larr; Kembali ke situs utama
           </Link>
         </div>
       </div>

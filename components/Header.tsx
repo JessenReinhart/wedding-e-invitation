@@ -83,19 +83,19 @@ const Header: React.FC<HeaderProps> = ({ brideName, groomName, isMobile }) => {
             <li className="px-2">
               <a href="#hero" onClick={scrollToSection('hero')} className={`flex flex-col items-center ${navLinkTextColor} ${navLinkHoverTextColor} font-medium transition-colors`}>
                 <FontAwesomeIcon icon={faHome} className="text-lg md:hidden" />
-                <span className="text-xs md:text-base">Home</span>
+                <span className="text-xs md:text-base">Beranda</span>
               </a>
             </li>
             <li className="px-2">
               <a href="#story" onClick={scrollToSection('story')} className={`flex flex-col items-center ${navLinkTextColor} ${navLinkHoverTextColor} font-medium transition-colors`}>
                 <FontAwesomeIcon icon={faBookOpen} className="text-lg md:hidden" />
-                <span className="text-xs md:text-base">Story</span>
+                <span className="text-xs md:text-base">Cerita</span>
               </a>
             </li>
             <li className="px-2">
               <a href="#event" onClick={scrollToSection('event')} className={`flex flex-col items-center ${navLinkTextColor} ${navLinkHoverTextColor} font-medium transition-colors`}>
                 <FontAwesomeIcon icon={faCalendarAlt} className="text-lg md:hidden" />
-                <span className="text-xs md:text-base">Event</span>
+                <span className="text-xs md:text-base">Acara</span>
               </a>
             </li>
             <li className="px-2">
@@ -107,7 +107,7 @@ const Header: React.FC<HeaderProps> = ({ brideName, groomName, isMobile }) => {
             <li className="px-2">
               <a href="#gallery" onClick={scrollToSection('gallery')} className={`flex flex-col items-center ${navLinkTextColor} ${navLinkHoverTextColor} font-medium transition-colors`}>
                 <FontAwesomeIcon icon={faImages} className="text-lg md:hidden" />
-                <span className="text-xs md:text-base">Gallery</span>
+                <span className="text-xs md:text-base">Galeri</span>
               </a>
             </li>
             {isMobile && (

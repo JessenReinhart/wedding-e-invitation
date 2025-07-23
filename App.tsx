@@ -21,6 +21,7 @@ import { MusicProvider } from './hooks/MusicContext';
 
 
 import BrideGroomSection from './components/BrideGroomSection';
+import IndividualPartnerSections from './components/IndividualPartnerSections';
 
 const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
@@ -75,6 +76,10 @@ const App: React.FC = () => {
                     groomName={WEDDING_DETAILS.groomName}
                     groomDob={WEDDING_DETAILS.groomDob}
                     groomImage={WEDDING_DETAILS.groomImage}
+                  />
+                  <IndividualPartnerSections
+                    groom={WEDDING_DETAILS.groomDetails}
+                    bride={WEDDING_DETAILS.brideDetails}
                   />
                   <OurStory story={WEDDING_DETAILS.story} title={WEDDING_DETAILS.storyTitle} />
                   <EventTimeline

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Design Test - Individual Partner Sections</title>
+    <style>
+        /* Copy the relevant CSS from index.css for testing */
+        .individual-partner-sections {
+            width: 100%;
+        }
+
+        .partner-section {
+            position: relative;
+            width: 100%;
+            min-height: 70vh;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .partner-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                135deg,
+                rgba(0, 0, 0, 0.65) 0%,
+                rgba(0, 0, 0, 0.45) 50%,
+                rgba(0, 0, 0, 0.65) 100%
+            );
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            z-index: 1;
+        }
+
+        .partner-content {
+            text-align: center;
+            color: white;
+            max-width: 700px;
+            z-index: 2;
+        }
+
+        .partner-name {
+            font-size: 3.5rem;
+            font-weight: 300;
+            margin-bottom: 1.5rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
+            line-height: 1.2;
+            letter-spacing: 0.5px;
+        }
+
+        .partner-family-info {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            line-height: 1.7;
+            font-weight: 300;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            opacity: 0.95;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Mobile breakpoints */
+        @media (max-width: 479px) {
+            .partner-section {
+                min-height: 45vh;
+                background-attachment: scroll;
+                background-position: center top;
+            }
+            
+            .partner-overlay {
+                padding: 1rem 0.8rem;
+                background: linear-gradient(
+                    135deg,
+                    rgba(0, 0, 0, 0.75) 0%,
+                    rgba(0, 0, 0, 0.55) 50%,
+                    rgba(0, 0, 0, 0.75) 100%
+                );
+            }
+            
+            .partner-content {
+                max-width: 100%;
+            }
+            
+            .partner-name {
+                font-size: 1.6rem;
+                margin-bottom: 0.6rem;
+                line-height: 1.1;
+                letter-spacing: 0.2px;
+            }
+            
+            .partner-family-info {
+                font-size: 0.85rem;
+                margin-bottom: 1.2rem;
+                line-height: 1.4;
+                max-width: 320px;
+            }
+        }
+
+        @media (min-width: 480px) and (max-width: 575px) {
+            .partner-section {
+                min-height: 50vh;
+                background-attachment: scroll;
+            }
+            
+            .partner-overlay {
+                padding: 1.2rem;
+            }
+            
+            .partner-name {
+                font-size: 2rem;
+                margin-bottom: 0.8rem;
+                line-height: 1.1;
+            }
+            
+            .partner-family-info {
+                font-size: 0.95rem;
+                margin-bottom: 1.5rem;
+                line-height: 1.5;
+                max-width: 400px;
+            }
+        }
+
+        @media (min-width: 576px) and (max-width: 767px) {
+            .partner-section {
+                min-height: 55vh;
+                background-attachment: scroll;
+            }
+            
+            .partner-overlay {
+                padding: 1.5rem;
+            }
+            
+            .partner-name {
+                font-size: 2.4rem;
+                margin-bottom: 1rem;
+                line-height: 1.1;
+            }
+            
+            .partner-family-info {
+                font-size: 1.05rem;
+                margin-bottom: 1.8rem;
+                line-height: 1.6;
+                max-width: 500px;
+            }
+        }
+
+        @media (min-width: 768px) and (max-width: 991px) {
+            .partner-section {
+                min-height: 65vh;
+                background-attachment: scroll;
+            }
+            
+            .partner-overlay {
+                padding: 2rem 1.5rem;
+            }
+            
+            .partner-name {
+                font-size: 2.8rem;
+                margin-bottom: 1.2rem;
+            }
+            
+            .partner-family-info {
+                font-size: 1.15rem;
+                margin-bottom: 2rem;
+                max-width: 550px;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .partner-section {
+                min-height: 80vh;
+            }
+            
+            .partner-name {
+                font-size: 4rem;
+            }
+            
+            .partner-family-info {
+                font-size: 1.4rem;
+                max-width: 700px;
+            }
+        }
+
+        /* Test styles */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        
+        .test-info {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-info">
+        <div>Screen Width: <span id="width"></span>px</div>
+        <div>Screen Height: <span id="height"></span>px</div>
+        <div>Breakpoint: <span id="breakpoint"></span></div>
+    </div>
+
+    <div class="individual-partner-sections">
+        <!-- Groom Section -->
+        <section class="partner-section groom-section" style="background-image: url('https://picsum.photos/seed/groom-full/1920/1080');">
+            <div class="partner-overlay">
+                <div class="partner-content">
+                    <h2 class="partner-name">Mathew Agape Sitorus</h2>
+                    <p class="partner-family-info">Putra dari Bapak Mangapul Sitorus & Ibu Yiendertivita Damanik</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bride Section -->
+        <section class="partner-section bride-section" style="background-image: url('https://picsum.photos/seed/bride-full/1920/1080');">
+            <div class="partner-overlay">
+                <div class="partner-content">
+                    <h2 class="partner-name">Anjelia Septriani Siahaan</h2>
+                    <p class="partner-family-info">Putri dari Bapak Israel Siahaan (Alm) & Ibu Mariana Nursita Hasibuansection</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        function updateScreenInfo() {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            
+            document.getElementById('width').textContent = width;
+            document.getElementById('height').textContent = height;
+            
+            let breakpoint = '';
+            if (width >= 1600) breakpoint = 'Ultra-wide (1600px+)';
+            else if (width >= 1200) breakpoint = 'Large Desktop (1200px+)';
+            else if (width >= 992) breakpoint = 'Desktop (992-1199px)';
+            else if (width >= 768) breakpoint = 'Tablet Landscape (768-991px)';
+            else if (width >= 576) breakpoint = 'Tablet Portrait (576-767px)';
+            else if (width >= 480) breakpoint = 'Mobile Large (480-575px)';
+            else if (width >= 360) breakpoint = 'Mobile Small (360-479px)';
+            else breakpoint = 'Extra Small (< 360px)';
+            
+            document.getElementById('breakpoint').textContent = breakpoint;
+        }
+        
+        updateScreenInfo();
+        window.addEventListener('resize', updateScreenInfo);
+    </script>
+</body>
+</html>
