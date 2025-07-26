@@ -25,6 +25,7 @@ export interface PartnerDetails {
   fullName: string;
   parentInfo: string;
   image: string;
+  imageDesktop: string;
   instagramHandle: string;
 }
 

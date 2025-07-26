@@ -19,15 +19,24 @@ const IndividualPartnerSections: React.FC<IndividualPartnerSectionsProps> = ({
   groom,
   bride
 }) => {
+  // Helper function to get appropriate image based on screen size
+  const getResponsiveImage = (partner: PartnerDetails): string => {
+    // Use desktop image for large screens (lg and above), mobile image for smaller screens
+    if (typeof window !== 'undefined' && window.innerWidth >= 1024) {
+      return partner.imageDesktop || partner.image;
+    }
+    return partner.image;
+  };
+
   const [groomImage, setGroomImage] = useState<ImageState>({
     loaded: false,
     error: false,
-    src: groom.image
+    src: getResponsiveImage(groom)
   });
   const [brideImage, setBrideImage] = useState<ImageState>({
     loaded: false,
     error: false,
-    src: bride.image
+    src: getResponsiveImage(bride)
   });
   // Fallback images for when primary images fail to load
   const FALLBACK_IMAGES = {
@@ -79,9 +88,38 @@ const IndividualPartnerSections: React.FC<IndividualPartnerSectionsProps> = ({
       img.src = src;
     };
 
-    preloadImageWithFallback(groom.image, FALLBACK_IMAGES.groom, setGroomImage);
-    preloadImageWithFallback(bride.image, FALLBACK_IMAGES.bride, setBrideImage);
-  }, [groom.image, bride.image]);
+    // Load appropriate images based on current screen size
+    const groomImageSrc = getResponsiveImage(groom);
+    const brideImageSrc = getResponsiveImage(bride);
+
+    preloadImageWithFallback(groomImageSrc, FALLBACK_IMAGES.groom, setGroomImage);
+    preloadImageWithFallback(brideImageSrc, FALLBACK_IMAGES.bride, setBrideImage);
+
+    // Handle screen resize to switch between mobile and desktop images
+    const handleResize = () => {
+      const newGroomImageSrc = getResponsiveImage(groom);
+      const newBrideImageSrc = getResponsiveImage(bride);
+
+      // Only reload if the image source actually changed
+      if (newGroomImageSrc !== groomImage.src) {
+        setGroomImage(prev => ({ ...prev, loaded: false, error: false, src: newGroomImageSrc }));
+        preloadImageWithFallback(newGroomImageSrc, FALLBACK_IMAGES.groom, setGroomImage);
+      }
+
+      if (newBrideImageSrc !== brideImage.src) {
+        setBrideImage(prev => ({ ...prev, loaded: false, error: false, src: newBrideImageSrc }));
+        preloadImageWithFallback(newBrideImageSrc, FALLBACK_IMAGES.bride, setBrideImage);
+      }
+    };
+
+    // Add resize listener
+    window.addEventListener('resize', handleResize);
+
+    // Cleanup
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [groom, bride, groomImage.src, brideImage.src]);
   // Helper function to construct Instagram URL
   const getInstagramUrl = (handle: string): string => {
     if (!handle || handle.trim() === '') {
@@ -201,10 +239,9 @@ const IndividualPartnerSections: React.FC<IndividualPartnerSectionsProps> = ({
     // Background image classes - applied when image is loaded
     const backgroundImageClasses = [
       'bg-cover', // Responsive background sizing
-      'bg-center', // Responsive background positioning
+      'bg-top', // Responsive background positioning
       'bg-no-repeat', // Prevent image repetition
       'bg-fixed', // Optional: parallax effect on larger screens
-      'sm:bg-scroll' // Disable fixed on mobile for better performance
     ];
 
     // Error state gradient classes using Tailwind utilities
