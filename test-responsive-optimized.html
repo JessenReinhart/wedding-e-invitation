@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Breakpoint Optimizations Test - Individual Partner Sections</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Test styles to visualize breakpoints and optimizations */
+        .breakpoint-indicator {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.9);
+            color: white;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-family: monospace;
+            z-index: 1000;
+            font-size: 12px;
+            line-height: 1.4;
+            max-width: 200px;
+        }
+        
+        .optimization-info {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background: rgba(0,0,0,0.9);
+            color: white;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-family: monospace;
+            z-index: 1000;
+            font-size: 11px;
+            line-height: 1.3;
+            max-width: 250px;
+        }
+        
+        /* Test section with optimized responsive classes */
+        .test-section {
+            position: relative;
+            width: 100%;
+            /* Mobile viewport height optimizations - fine-tuned for better mobile experience */
+            height: 100vh; /* Mobile-first: full viewport height */
+            min-height: 100vh; /* Ensure minimum full height on mobile */
+            max-height: 100vh; /* Prevent overflow on mobile */
+            /* Small mobile optimization for very small screens */
+            /* max-[480px]:h-[100dvh] - Use dynamic viewport height on very small screens */
+            /* max-[480px]:min-h-[100dvh] - Ensure proper height on small mobile devices */
+            /* Tablet specific height adjustments - optimized for better content visibility */
+            /* sm:h-[85vh] - Small tablet: 85vh height for better proportions */
+            /* sm:min-h-[600px] - Minimum height for small tablets */
+            /* sm:max-h-[900px] - Maximum height to prevent excessive stretching */
+            /* md:h-[80vh] - Medium tablet: 80vh height for optimal viewing */
+            /* md:min-h-[650px] - Increased minimum height for medium tablets */
+            /* md:max-h-[1000px] - Maximum height for medium tablets */
+            /* Desktop specific height and spacing adjustments - fine-tuned for optimal proportions */
+            /* lg:h-[85vh] - Large desktop: 85vh height */
+            /* lg:min-h-[700px] - Adjusted minimum height for large screens */
+            /* lg:max-h-[1100px] - Maximum height for large screens */
+            /* xl:h-[88vh] - Extra large desktop: slightly reduced from 90vh for better balance */
+            /* xl:min-h-[750px] - Adjusted minimum height for extra large screens */
+            /* xl:max-h-[1200px] - Maximum height for extra large screens */
+            /* 2xl:h-[82vh] - Ultra-wide: further reduced for better proportions on very wide screens */
+            /* 2xl:min-h-[800px] - Minimum height for ultra-wide screens */
+            /* 2xl:max-h-[1300px] - Maximum height for ultra-wide screens */
+            /* Orientation-specific styling optimizations - enhanced for better user experience */
+            /* portrait:h-screen - Full height in portrait mode */
+            /* portrait:min-h-screen - Ensure full height in portrait */
+            /* portrait:max-h-screen - Prevent overflow in portrait */
+            /* landscape:h-[88vh] - Slightly reduced in landscape for better content visibility */
+            /* landscape:min-h-[500px] - Minimum height in landscape mode */
+            /* landscape:max-h-[800px] - Maximum height in landscape mode */
+            /* landscape:sm:h-[78vh] - Further optimized for small landscape screens */
+            /* landscape:sm:min-h-[450px] - Minimum height for small landscape */
+            /* landscape:md:h-[82vh] - Optimized for medium landscape screens */
+            /* landscape:md:min-h-[550px] - Minimum height for medium landscape */
+            /* landscape:lg:h-[85vh] - Large landscape optimization */
+            /* landscape:lg:min-h-[600px] - Minimum height for large landscape */
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease-in-out;
+        }
+        
+        /* Apply responsive height optimizations */
+        @media (max-width: 480px) {
+            .test-section { 
+                height: 100dvh; 
+                min-height: 100dvh; 
+            }
+        }
+        
+        @media (min-width: 640px) {
+            .test-section { 
+                height: 85vh; 
+                min-height: 600px; 
+                max-height: 900px; 
+            }
+        }
+        
+        @media (min-width: 768px) {
+            .test-section { 
+                height: 80vh; 
+                min-height: 650px; 
+                max-height: 1000px; 
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .test-section { 
+                height: 85vh; 
+                min-height: 700px; 
+                max-height: 1100px; 
+            }
+        }
+        
+        @media (min-width: 1280px) {
+            .test-section { 
+                height: 88vh; 
+                min-height: 750px; 
+                max-height: 1200px; 
+            }
+        }
+        
+        @media (min-width: 1536px) {
+            .test-section { 
+                height: 82vh; 
+                min-height: 800px; 
+                max-height: 1300px; 
+            }
+        }
+        
+        /* Orientation-specific optimizations */
+        @media (orientation: portrait) {
+            .test-section { 
+                height: 100vh; 
+                min-height: 100vh; 
+                max-height: 100vh; 
+            }
+        }
+        
+        @media (orientation: landscape) {
+            .test-section { 
+                height: 88vh; 
+                min-height: 500px; 
+                max-height: 800px; 
+            }
+        }
+        
+        @media (orientation: landscape) and (min-width: 640px) {
+            .test-section { 
+                height: 78vh; 
+                min-height: 450px; 
+            }
+        }
+        
+        @media (orientation: landscape) and (min-width: 768px) {
+            .test-section { 
+                height: 82vh; 
+                min-height: 550px; 
+            }
+        }
+        
+        @media (orientation: landscape) and (min-width: 1024px) {
+            .test-section { 
+                height: 85vh; 
+                min-height: 600px; 
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="breakpoint-indicator">
+        <div><strong>Breakpoint:</strong> <span id="breakpoint">Loading...</span></div>
+        <div><strong>Size:</strong> <span id="size">Loading...</span></div>
+        <div><strong>Orientation:</strong> <span id="orientation">Loading...</span></div>
+        <div><strong>Height:</strong> <span id="height">Loading...</span></div>
+    </div>
+    
+    <div class="optimization-info">
+        <div><strong>Optimizations Applied:</strong></div>
+        <div id="optimizations">Loading...</div>
+    </div>
+    
+    <div class="test-section">
+        <div class="absolute inset-0 bg-gradient-to-br from-black/40 via-black/20 to-black/40 flex items-center justify-center p-4 sm:p-5 md:p-6 lg:p-8 xl:p-10 2xl:p-12 max-[480px]:p-3 portrait:p-4 portrait:sm:p-5 portrait:md:p-6 landscape:p-3 landscape:sm:p-4 landscape:md:p-5 landscape:lg:p-6">
+            <div class="text-center text-white max-w-xs sm:max-w-sm md:max-w-lg lg:max-w-xl xl:max-w-2xl 2xl:max-w-4xl mx-auto space-y-4 sm:space-y-5 md:space-y-6 lg:space-y-7 xl:space-y-8 2xl:space-y-9 max-[480px]:space-y-3 max-[480px]:max-w-[280px] portrait:space-y-4 portrait:sm:space-y-5 portrait:md:space-y-6 landscape:space-y-3 landscape:sm:space-y-4 landscape:md:space-y-5 landscape:lg:space-y-6 relative">
+                <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-9xl font-light mb-2 sm:mb-3 md:mb-4 lg:mb-5 xl:mb-6 2xl:mb-7 max-[480px]:text-2xl max-[480px]:mb-2 portrait:text-4xl portrait:sm:text-5xl portrait:md:text-6xl portrait:lg:text-7xl landscape:text-2xl landscape:sm:text-3xl landscape:md:text-4xl landscape:lg:text-5xl landscape:xl:text-6xl" style="text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9)">
+                    Responsive Test
+                </h1>
+                <p class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-4xl mb-4 sm:mb-5 md:mb-6 lg:mb-8 xl:mb-10 2xl:mb-14 max-w-full sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-3xl mx-auto leading-relaxed max-[480px]:text-xs max-[480px]:mb-3 max-[480px]:leading-snug portrait:text-base portrait:sm:text-lg portrait:md:text-xl portrait:lg:text-2xl landscape:text-xs landscape:sm:text-sm landscape:md:text-base landscape:lg:text-lg landscape:xl:text-xl" style="text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9)">
+                    Testing optimized responsive breakpoints for Individual Partner Sections with fine-tuned mobile viewport height behavior, tablet and desktop specific adjustments, and orientation-specific styling optimizations.
+                </p>
+                <div class="mt-4 sm:mt-5 md:mt-6 lg:mt-7 xl:mt-8 2xl:mt-10 max-[480px]:mt-3 portrait:mt-4 portrait:sm:mt-5 portrait:md:mt-6 landscape:mt-2 landscape:sm:mt-3 landscape:md:mt-4 landscape:lg:mt-5">
+                    <button class="inline-flex items-center gap-1.5 sm:gap-2 md:gap-2.5 lg:gap-3 xl:gap-3.5 2xl:gap-4 px-3 py-1.5 sm:px-4 sm:py-2 md:px-5 md:py-2.5 lg:px-6 lg:py-3 xl:px-7 xl:py-3.5 2xl:px-9 2xl:py-5 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-3xl border border-white/40 rounded-full bg-white/10 backdrop-blur-sm text-white transition-all duration-300 hover:bg-white/25 hover:border-white/60 hover:scale-105 max-[480px]:text-xs max-[480px]:px-2.5 max-[480px]:py-1 max-[480px]:gap-1 portrait:text-sm portrait:sm:text-base portrait:md:text-lg portrait:lg:text-xl landscape:text-xs landscape:sm:text-sm landscape:md:text-base landscape:lg:text-lg landscape:xl:text-xl">
+                        Optimized Button
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function updateBreakpointIndicator() {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            const orientation = width > height ? 'landscape' : 'portrait';
+            let breakpoint = '';
+            let optimizations = [];
+            
+            // Determine breakpoint
+            if (width >= 1536) breakpoint = '2xl';
+            else if (width >= 1280) breakpoint = 'xl';
+            else if (width >= 1024) breakpoint = 'lg';
+            else if (width >= 768) breakpoint = 'md';
+            else if (width >= 640) breakpoint = 'sm';
+            else breakpoint = 'base';
+            
+            // Determine applied optimizations
+            if (width <= 480) {
+                optimizations.push('Small mobile: 100dvh height');
+            }
+            
+            if (breakpoint === 'base') {
+                optimizations.push('Mobile: 100vh height, min-height, max-height');
+            } else if (breakpoint === 'sm') {
+                optimizations.push('Small tablet: 85vh height, 600px min');
+            } else if (breakpoint === 'md') {
+                optimizations.push('Medium tablet: 80vh height, 650px min');
+            } else if (breakpoint === 'lg') {
+                optimizations.push('Large desktop: 85vh height, 700px min');
+            } else if (breakpoint === 'xl') {
+                optimizations.push('Extra large: 88vh height, 750px min');
+            } else if (breakpoint === '2xl') {
+                optimizations.push('Ultra-wide: 82vh height, 800px min');
+            }
+            
+            if (orientation === 'portrait') {
+                optimizations.push('Portrait: Full screen height');
+            } else {
+                if (breakpoint === 'base') {
+                    optimizations.push('Landscape: 88vh height');
+                } else if (breakpoint === 'sm') {
+                    optimizations.push('Landscape SM: 78vh height');
+                } else if (breakpoint === 'md') {
+                    optimizations.push('Landscape MD: 82vh height');
+                } else if (breakpoint === 'lg') {
+                    optimizations.push('Landscape LG: 85vh height');
+                }
+            }
+            
+            document.getElementById('breakpoint').textContent = breakpoint;
+            document.getElementById('size').textContent = `${width}x${height}`;
+            document.getElementById('orientation').textContent = orientation;
+            document.getElementById('height').textContent = `${document.querySelector('.test-section').offsetHeight}px`;
+            document.getElementById('optimizations').innerHTML = optimizations.map(opt => `• ${opt}`).join('<br>');
+        }
+        
+        updateBreakpointIndicator();
+        window.addEventListener('resize', updateBreakpointIndicator);
+        window.addEventListener('orientationchange', () => {
+            setTimeout(updateBreakpointIndicator, 100);
+        });
+    </script>
+</body>
+</html>
