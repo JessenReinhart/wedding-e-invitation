@@ -79,16 +79,6 @@ const IndividualPartnerSections: React.FC<IndividualPartnerSectionsProps> = ({
     imageState: ImageState,
     sectionType: 'groom' | 'bride'
   ) => {
-    // Get background image style - use appropriate image for current viewport
-    const getBackgroundStyle = (): React.CSSProperties => {
-      if (imageState.loaded) {
-        return {
-          backgroundImage: `url(${partner.image})`,
-        };
-      }
-      return {};
-    };
-
     // Get fallback gradient classes for error state
     const errorGradient = sectionType === 'groom'
       ? 'bg-gradient-to-br from-green-800 to-green-600'
