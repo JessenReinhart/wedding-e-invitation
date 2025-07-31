@@ -6,10 +6,11 @@ interface HeroProps {
   groomName: string;
   date: string;
   heroImage: string;
+  heroMobileImage: string;
   onImageLoad: () => void;
 }
 
-const Hero: React.FC<HeroProps> = ({ brideName, groomName, date, heroImage, onImageLoad }) => {
+const Hero: React.FC<HeroProps> = ({ brideName, groomName, date, heroImage, heroMobileImage, onImageLoad }) => {
   const [blur, setBlur] = useState(0);
   const location = useLocation();
   const [visitorName, setVisitorName] = useState<string | null>(null);
@@ -39,9 +40,9 @@ const Hero: React.FC<HeroProps> = ({ brideName, groomName, date, heroImage, onIm
   return (
     <section id="hero" className="relative h-screen flex items-center justify-center text-center text-white overflow-hidden">
       <div
-        className="absolute inset-0"
+        className={`bg-[url(${heroMobileImage})]
+          md:bg-[url(${heroImage})] absolute inset-0`}
         style={{
-          backgroundImage: `url(${heroImage})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           transform: `scale(${1 + blur / 100})`,

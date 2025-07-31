@@ -38,6 +38,7 @@ export interface WeddingDetails {
   groomImage: string;
   date: string;
   heroImage: string;
+  heroMobileImage: string;
   storyTitle: string;
   story: string;
   ceremony: EventInfo;

@@ -67,6 +67,7 @@ const App: React.FC = () => {
                     groomName={WEDDING_DETAILS.groomName}
                     date={WEDDING_DETAILS.date}
                     heroImage={WEDDING_DETAILS.heroImage}
+                    heroMobileImage={WEDDING_DETAILS.heroMobileImage}
                     onImageLoad={handleHeroLoaded}
                   />
                   <BrideGroomSection
