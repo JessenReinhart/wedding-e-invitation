@@ -18,7 +18,7 @@ import PrivateRoute from './components/PrivateRoute';
 import { Toaster } from 'react-hot-toast';
 import MusicPlayer from './components/MusicPlayer';
 import { MusicProvider } from './hooks/MusicContext';
-
+import { useScrollLock } from './hooks/useScrollLock';
 
 import BrideGroomSection from './components/BrideGroomSection';
 import IndividualPartnerSections from './components/IndividualPartnerSections';
@@ -27,6 +27,11 @@ const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const location = useLocation();
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [isScrollLocked, setIsScrollLocked] = useState(() => {
+    // Check if scroll was already unlocked in this session
+    const wasUnlocked = sessionStorage.getItem('scrollUnlocked');
+    return !wasUnlocked;
+  });
 
   useEffect(() => {
     const handleResize = () => {
@@ -42,6 +47,36 @@ const App: React.FC = () => {
   const handleHeroLoaded = () => {
     setLoading(false);
   };
+
+  const handleScrollUnlock = () => {
+    setIsScrollLocked(false);
+    // Mark as unlocked in session storage
+    sessionStorage.setItem('scrollUnlocked', 'true');
+    // Smooth scroll to bride-groom section after a brief delay
+    setTimeout(() => {
+      const brideGroomElement = document.getElementById('bride-groom');
+      if (brideGroomElement) {
+        brideGroomElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
+  };
+
+  // Reset scroll lock when navigating away from home page
+  useEffect(() => {
+    if (location.pathname !== '/') {
+      setIsScrollLocked(false);
+    } else {
+      // Check session storage when returning to home page
+      const wasUnlocked = sessionStorage.getItem('scrollUnlocked');
+      setIsScrollLocked(!wasUnlocked);
+    }
+  }, [location.pathname]);
+
+  // Initialize scroll lock hook
+  useScrollLock({
+    isLocked: isScrollLocked && location.pathname === '/',
+    onUnlock: handleScrollUnlock
+  });
 
   const showLoader = loading && location.pathname === '/';
 
@@ -69,6 +104,8 @@ const App: React.FC = () => {
                     heroImage={WEDDING_DETAILS.heroImage}
                     heroMobileImage={WEDDING_DETAILS.heroMobileImage}
                     onImageLoad={handleHeroLoaded}
+                    isScrollLocked={isScrollLocked}
+                    onScrollUnlock={handleScrollUnlock}
                   />
                   <BrideGroomSection
                     brideName={WEDDING_DETAILS.brideName}

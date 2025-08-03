@@ -8,9 +8,11 @@ interface HeroProps {
   heroImage: string;
   heroMobileImage: string;
   onImageLoad: () => void;
+  isScrollLocked: boolean;
+  onScrollUnlock: () => void;
 }
 
-const Hero: React.FC<HeroProps> = ({ brideName, groomName, date, heroImage, heroMobileImage, onImageLoad }) => {
+const Hero: React.FC<HeroProps> = ({ brideName, groomName, date, heroImage, heroMobileImage, onImageLoad, isScrollLocked, onScrollUnlock }) => {
   const [blur, setBlur] = useState(0);
   const location = useLocation();
   const [visitorName, setVisitorName] = useState<string | null>(null);
@@ -64,21 +66,33 @@ const Hero: React.FC<HeroProps> = ({ brideName, groomName, date, heroImage, hero
           {brideName} &amp; {groomName}
         </h1>
         <p className="text-2xl md:text-3xl font-light mb-8">{date}</p>
-        <a
-          href="#story"
+        <button
           onClick={(e) => {
             e.preventDefault();
-            const storyElement = document.getElementById('bride-groom');
-            if (storyElement) {
-              storyElement.scrollIntoView({ behavior: 'smooth' });
+            onScrollUnlock();
+          }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              onScrollUnlock();
             }
           }}
-          className="mt-4 inline-block bg-rose-gold hover:bg-opacity-80 text-white font-semibold py-3 px-8 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105"
+          className={`mt-4 inline-block bg-rose-gold hover:bg-opacity-80 text-white font-semibold py-3 px-8 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-rose-gold focus:ring-opacity-50 ${
+            isScrollLocked ? 'cta-button-locked' : ''
+          }`}
+          aria-label="Unlock scrolling and view more details"
+          tabIndex={0}
         >
           Selengkapnya
-        </a>
+        </button>
       </div>
-      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-pulse-slow">
+      <div 
+        className={`absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-pulse-slow ${
+          isScrollLocked ? 'scroll-indicator-locked' : ''
+        }`}
+        aria-hidden="true"
+        role="presentation"
+      >
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8 text-white">
           <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 5.25 7.5 7.5 7.5-7.5m-15 6 7.5 7.5 7.5-7.5" />
         </svg>

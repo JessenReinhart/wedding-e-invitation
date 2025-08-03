@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { PartnerDetails } from '../types';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram } from '@fortawesome/free-brands-svg-icons';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useEffect, useState } from 'react';
+import { PartnerDetails } from '../types';
+import { useDeviceDetection } from '../utils/deviceDetection';
 
 interface IndividualPartnerSectionsProps {
   groom: PartnerDetails;
@@ -18,6 +19,7 @@ const IndividualPartnerSections: React.FC<IndividualPartnerSectionsProps> = ({
   groom,
   bride
 }) => {
+  const { isIOS } = useDeviceDetection();
   const [groomImage, setGroomImage] = useState<ImageState>({
     loaded: false,
     error: false
@@ -90,16 +92,29 @@ const IndividualPartnerSections: React.FC<IndividualPartnerSectionsProps> = ({
           bg-[url(${partner.image})]
           md:bg-[url(${partner.imageDesktop})]
           relative w-full h-screen md:h-[80vh] lg:h-[85vh] xl:h-[90vh]
-          flex items-center justify-center bg-cover bg-center bg-no-repeat bg-fixed
+          flex items-center justify-center bg-cover bg-center bg-no-repeat
+          ${isIOS ? 'bg-fixed' : ''}
           ${imageState.error ? errorGradient : ''}
         `}
+        style={{
+          // Use scroll attachment for iOS to prevent zoom issues
+          backgroundAttachment: isIOS ? 'scroll' : 'fixed',
+          // iOS-specific optimizations
+          ...(isIOS && {
+            backgroundSize: 'cover',
+            backgroundPosition: 'center center',
+            willChange: "transform",
+            // Prevent iOS Safari zoom issues
+            WebkitBackgroundSize: 'cover',
+          })
+        }}
         role="region"
         aria-labelledby={`${sectionType}-heading`}
       >
         {/* Overlay */}
         <div className="absolute inset-0 bg-gradient-to-br from-black/40 via-black/20 to-black/40 flex items-center justify-center p-4 md:p-8">
           {/* Content container */}
-          <div className="text-center text-white max-w-screen mx-auto space-y-6 relative">
+          <div className="text-center text-white max-w-screen mx-auto mt-56 space-y-2 md:space-y-6 relative">
             {/* Loading state */}
             {!imageState.loaded && !imageState.error && (
               <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/20 backdrop-blur-sm rounded-lg p-6">
@@ -130,7 +145,8 @@ const IndividualPartnerSections: React.FC<IndividualPartnerSectionsProps> = ({
 
             {/* Partner family info */}
             <p
-              className="text-sm md:text-xl text-shadow-xl max-w-screen mx-auto leading-relaxed"
+              className="text-sm md:text-xl max-w-screen mx-auto md:leading-relaxed"
+              style={{ textShadow: '3px 3px 6px rgba(0, 0, 0, 0.9)' }}
             >
               {partner.parentInfo || 'Family information unavailable'}
             </p>
