@@ -83,7 +83,7 @@ const Hero: React.FC<HeroProps> = ({ brideName, groomName, date, heroImage, hero
           aria-label="Unlock scrolling and view more details"
           tabIndex={0}
         >
-          Selengkapnya
+          Buka Undangan
         </button>
       </div>
       <div 

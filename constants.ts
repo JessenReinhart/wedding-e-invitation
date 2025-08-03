@@ -7,30 +7,30 @@ export const WEDDING_DETAILS: WeddingDetails = {
   groomName: "Mathew",
   groomDob: "14 Februari 1993",
   groomImage: "https://www.imgtap.com/images/2025/07/31/teo-wid-min.jpg",
-  date: "Sabtu, 26 Oktober 2024",
+  date: "Sabtu, 29 November 2025",
   heroImage: "https://imghost.online/ib/6dJ3goQaWAytIa6_1753543238.jpg",
-  heroMobileImage:"https://www.imgtap.com/images/2025/07/31/header-mobile.jpg",
+  heroMobileImage: "https://www.imgtap.com/images/2025/07/31/header-mobile.jpg",
   storyTitle: "Kisah Cinta Kami",
   story: "Dari pertemuan yang tak terduga hingga cinta seumur hidup, perjalanan kami dipenuhi dengan tawa, petualangan, dan dukungan yang tak tergoyahkan satu sama lain. Kami menemukan ikatan yang semakin dalam setiap harinya, dibangun atas mimpi bersama dan pemahaman yang mendalam. Kami sangat bersemangat untuk memulai babak baru sebagai suami istri, dan kami tidak sabar untuk merayakan hari istimewa kami bersama Anda, keluarga dan sahabat tercinta, yang telah melimpahkan cinta dan dukungan sepanjang perjalanan kami.",
   ceremony: {
     title: "Upacara Pernikahan",
     time: "2:00 PM",
-    venue: "The Enchanted Garden",
-    address: "123 Blossom Lane, Dreamville, CA",
+    venue: "Balai Pertemuan Umum Samina",
+    address: "Jl. Kebahagiaan No.78, RT 10/ 01, Abadijaya, Kec. Sukmajaya, Kota Depok, Jawa Barat 16417",
     details: "Bergabunglah dengan kami saat kami mengucapkan janji suci dalam suasana taman yang indah, dikelilingi ketenangan alam.",
-    latitude: 34.052235, // Example latitude for Los Angeles
-    longitude: -118.243683 // Example longitude for Los Angeles
+    latitude: -6.401147381600912,
+    longitude: 106.85105845692438
   },
   reception: {
     title: "Resepsi",
     time: "6:00 PM",
-    venue: "Starlight Ballroom",
-    address: "456 Celebration Avenue, Dreamville, CA",
+    venue: "Balai Pertemuan Umum Samina",
+    address: "Jl. Kebahagiaan No.78, RT 10/ 01, Abadijaya, Kec. Sukmajaya, Kota Depok, Jawa Barat 16417",
     details: "Rayakan bersama kami! Malam yang penuh dengan makan malam, tarian, dan kenangan indah yang akan bertahan seumur hidup menanti Anda.",
-    latitude: 34.052235, // Example latitude for Los Angeles
-    longitude: -118.243683 // Example longitude for Los Angeles
+    latitude: -6.401147381600912,
+    longitude: 106.85105845692438
   },
-  rsvpByDate: "15 September 2024",
+  rsvpByDate: "15 November 2025",
   galleryImages: [
     { src: "https://imghost.online/ib/vXW9g0OVDmDRdbD_1753546747.jpg", alt: "Pasangan tersenyum" },
     { src: "https://imghost.online/ib/z59BUOoLLq0xdu5_1753546748.jpg", alt: "Detail tempat pernikahan" },

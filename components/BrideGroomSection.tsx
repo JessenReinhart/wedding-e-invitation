@@ -3,19 +3,15 @@ import SectionWrapper from './SectionWrapper';
 
 interface BrideGroomSectionProps {
   brideName: string;
-  brideDob: string;
   brideImage: string;
   groomName: string;
-  groomDob: string;
   groomImage: string;
 }
 
 const BrideGroomSection: React.FC<BrideGroomSectionProps> = ({
   brideName,
-  brideDob,
   brideImage,
   groomName,
-  groomDob,
   groomImage,
 }) => {
   return (
@@ -29,7 +25,6 @@ const BrideGroomSection: React.FC<BrideGroomSectionProps> = ({
             className="w-48 h-48 rounded-full object-cover shadow-lg mb-4 border-4 border-rose-gold"
           />
           <h3 className="text-3xl font-serif text-deep-green mb-2">{brideName}</h3>
-          <p className="text-lg text-charcoal-gray">Lahir: {brideDob}</p>
         </div>
 
         {/* Separator */}
@@ -43,7 +38,6 @@ const BrideGroomSection: React.FC<BrideGroomSectionProps> = ({
             className="w-48 h-48 rounded-full object-cover shadow-lg mb-4 border-4 border-rose-gold"
           />
           <h3 className="text-3xl font-serif text-deep-green mb-2">{groomName}</h3>
-          <p className="text-lg text-charcoal-gray">Lahir: {groomDob}</p>
         </div>
       </div>
     </SectionWrapper>

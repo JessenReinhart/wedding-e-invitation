@@ -25,6 +25,8 @@ import IndividualPartnerSections from './components/IndividualPartnerSections';
 
 const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
+  const [heroLoaded, setHeroLoaded] = useState(false);
+  const [partnerImagesLoaded, setPartnerImagesLoaded] = useState(false);
   const location = useLocation();
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [isScrollLocked, setIsScrollLocked] = useState(() => {
@@ -44,8 +46,19 @@ const App: React.FC = () => {
     };
   }, []);
 
+  // Update loading state when both hero and partner images are loaded
+  useEffect(() => {
+    if (heroLoaded && partnerImagesLoaded) {
+      setLoading(false);
+    }
+  }, [heroLoaded, partnerImagesLoaded]);
+
   const handleHeroLoaded = () => {
-    setLoading(false);
+    setHeroLoaded(true);
+  };
+
+  const handlePartnerImagesLoaded = () => {
+    setPartnerImagesLoaded(true);
   };
 
   const handleScrollUnlock = () => {
@@ -109,15 +122,14 @@ const App: React.FC = () => {
                   />
                   <BrideGroomSection
                     brideName={WEDDING_DETAILS.brideName}
-                    brideDob={WEDDING_DETAILS.brideDob}
                     brideImage={WEDDING_DETAILS.brideImage}
                     groomName={WEDDING_DETAILS.groomName}
-                    groomDob={WEDDING_DETAILS.groomDob}
                     groomImage={WEDDING_DETAILS.groomImage}
                   />
                   <IndividualPartnerSections
                     groom={WEDDING_DETAILS.groomDetails}
                     bride={WEDDING_DETAILS.brideDetails}
+                    onImagesLoad={handlePartnerImagesLoaded}
                   />
                   <OurStory story={WEDDING_DETAILS.story} title={WEDDING_DETAILS.storyTitle} />
                   <EventTimeline

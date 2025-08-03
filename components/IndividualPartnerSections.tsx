@@ -8,6 +8,7 @@ import { useDeviceDetection } from '../utils/deviceDetection';
 interface IndividualPartnerSectionsProps {
   groom: PartnerDetails;
   bride: PartnerDetails;
+  onImagesLoad?: () => void;
 }
 
 interface ImageState {
@@ -17,7 +18,8 @@ interface ImageState {
 
 const IndividualPartnerSections: React.FC<IndividualPartnerSectionsProps> = ({
   groom,
-  bride
+  bride,
+  onImagesLoad
 }) => {
   const { isIOS } = useDeviceDetection();
   const [groomImage, setGroomImage] = useState<ImageState>({
@@ -49,6 +51,13 @@ const IndividualPartnerSections: React.FC<IndividualPartnerSectionsProps> = ({
     preloadImage(groom.image, setGroomImage);
     preloadImage(bride.image, setBrideImage);
   }, [groom.image, bride.image]);
+
+  // Call onImagesLoad when both images are loaded or errored
+  useEffect(() => {
+    if ((groomImage.loaded || groomImage.error) && (brideImage.loaded || brideImage.error)) {
+      onImagesLoad?.();
+    }
+  }, [groomImage.loaded, groomImage.error, brideImage.loaded, brideImage.error, onImagesLoad]);
   // Helper function to render Instagram link
   const renderInstagramLink = (partner: PartnerDetails) => {
     if (!partner.instagramHandle?.trim()) return null;
