@@ -48,6 +48,7 @@ export interface WeddingDetails {
   footerMessage: string;
   groomDetails: PartnerDetails;
   brideDetails: PartnerDetails;
+  giftInfo?: GiftInfo;
 }
 
 export interface Guest {
@@ -57,4 +58,23 @@ export interface Guest {
   email: string;
   plusoneqty?: number;
   plusonename?: string;
+}
+
+export interface BankAccountInfo {
+  bankName?: string;
+  accountNumber?: string;
+  accountHolderName?: string;
+}
+
+export interface DeliveryAddress {
+  recipientName?: string;
+  streetAddress?: string;
+  city?: string;
+  postalCode?: string;
+  country?: string;
+}
+
+export interface GiftInfo {
+  bankAccount?: BankAccountInfo;
+  deliveryAddress?: DeliveryAddress;
 }

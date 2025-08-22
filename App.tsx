@@ -22,6 +22,7 @@ import { useScrollLock } from './hooks/useScrollLock';
 
 import BrideGroomSection from './components/BrideGroomSection';
 import IndividualPartnerSections from './components/IndividualPartnerSections';
+import WeddingGiftSection from './components/WeddingGiftSection';
 
 const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
@@ -137,6 +138,7 @@ const App: React.FC = () => {
                     reception={WEDDING_DETAILS.reception}
                   />
                   <RSVPSection rsvpDate={WEDDING_DETAILS.rsvpByDate} />
+                  <WeddingGiftSection giftInfo={WEDDING_DETAILS.giftInfo} />
                   <GallerySection images={WEDDING_DETAILS.galleryImages} />
                   <MessageFromCouple brideName={WEDDING_DETAILS.brideName} groomName={WEDDING_DETAILS.groomName} />
                   <CommentSection />
