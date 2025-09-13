@@ -1,19 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
-import { WEDDING_DETAILS } from './constants';
+import React, { useEffect, useState } from 'react';
+import { Route, Routes, useLocation } from 'react-router-dom';
+import AdminPage from './components/AdminPage';
+import CommentSection from './components/CommentSection';
+import EventTimeline from './components/EventTimeline';
+import Footer from './components/Footer';
+import GallerySection from './components/GallerySection';
 import Header from './components/Header';
 import Hero from './components/Hero';
-import OurStory from './components/OurStory';
-import EventTimeline from './components/EventTimeline';
-import RSVPSection from './components/RSVPSection';
-import GallerySection from './components/GallerySection';
-import Footer from './components/Footer';
-import MessageFromCouple from './components/MessageFromCouple';
-import AdminPage from './components/AdminPage';
-import RSVPPage from './components/RSVPPage';
-import CommentSection from './components/CommentSection';
 import LoginPage from './components/LoginPage';
+import MessageFromCouple from './components/MessageFromCouple';
 import PrivateRoute from './components/PrivateRoute';
+import RSVPPage from './components/RSVPPage';
+import RSVPSection from './components/RSVPSection';
+import { WEDDING_DETAILS } from './constants';
 
 import { Toaster } from 'react-hot-toast';
 import MusicPlayer from './components/MusicPlayer';
@@ -90,7 +89,7 @@ const App: React.FC = () => {
   useScrollLock({
     isLocked: isScrollLocked && location.pathname === '/',
     onUnlock: handleScrollUnlock
-  });
+  }); 
 
   const showLoader = loading && location.pathname === '/';
 
@@ -132,7 +131,6 @@ const App: React.FC = () => {
                     bride={WEDDING_DETAILS.brideDetails}
                     onImagesLoad={handlePartnerImagesLoaded}
                   />
-                  <OurStory story={WEDDING_DETAILS.story} title={WEDDING_DETAILS.storyTitle} />
                   <EventTimeline
                     ceremony={WEDDING_DETAILS.ceremony}
                     reception={WEDDING_DETAILS.reception}
@@ -140,7 +138,10 @@ const App: React.FC = () => {
                   <RSVPSection rsvpDate={WEDDING_DETAILS.rsvpByDate} />
                   <WeddingGiftSection giftInfo={WEDDING_DETAILS.giftInfo} />
                   <GallerySection images={WEDDING_DETAILS.galleryImages} />
-                  <MessageFromCouple brideName={WEDDING_DETAILS.brideName} groomName={WEDDING_DETAILS.groomName} />
+                  <MessageFromCouple
+                    brideName={WEDDING_DETAILS.brideName}
+                    groomName={WEDDING_DETAILS.groomName}
+                  />
                   <CommentSection />
                 </>
               }

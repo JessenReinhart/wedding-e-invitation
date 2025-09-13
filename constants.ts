@@ -14,7 +14,7 @@ export const WEDDING_DETAILS: WeddingDetails = {
   story: "Dari pertemuan yang tak terduga hingga cinta seumur hidup, perjalanan kami dipenuhi dengan tawa, petualangan, dan dukungan yang tak tergoyahkan satu sama lain. Kami menemukan ikatan yang semakin dalam setiap harinya, dibangun atas mimpi bersama dan pemahaman yang mendalam. Kami sangat bersemangat untuk memulai babak baru sebagai suami istri, dan kami tidak sabar untuk merayakan hari istimewa kami bersama Anda, keluarga dan sahabat tercinta, yang telah melimpahkan cinta dan dukungan sepanjang perjalanan kami.",
   ceremony: {
     title: "Pemberkatan",
-    time: "2:00 PM",
+    time: "08:30",
     venue: "Gereja POUK Depok II Timur",
     address: "Jl. Merapi, Abadijaya, Kec. Sukmajaya, Kota Depok, Jawa Barat 16417",
     details: "Bergabunglah dengan kami saat kami mengucapkan janji suci dalam suasana taman yang indah, dikelilingi ketenangan alam.",
@@ -23,7 +23,7 @@ export const WEDDING_DETAILS: WeddingDetails = {
   },
   reception: {
     title: "Resepsi",
-    time: "6:00 PM",
+    time: "12:00 - 14:00",
     venue: "Balai Pertemuan Umum Samina",
     address: "Jl. Kebahagiaan No.78, RT 10/ 01, Abadijaya, Kec. Sukmajaya, Kota Depok, Jawa Barat 16417",
     details: "Rayakan bersama kami! Malam yang penuh dengan makan malam, tarian, dan kenangan indah yang akan bertahan seumur hidup menanti Anda.",

@@ -61,8 +61,8 @@ const Hero: React.FC<HeroProps> = ({ brideName, groomName, date, heroImage, hero
             Kepada {visitorName} & Pasangan,
           </h2>
         )}
-        <h2 className="font-serif text-3xl md::text-5xl mb-4">Anda Diundang Untuk Merayakan Pernikahan</h2>
-        <h1 className="font-serif text-6xl md:text-8xl font-bold mb-2">
+        <h2 className="font-serif text-2xl md::text-5xl mb-4">The Wedding Of</h2>
+        <h1 className="font-serif text-4xl md:text-8xl font-bold mb-2">
           {brideName} &amp; {groomName}
         </h1>
         <p className="text-2xl md:text-3xl font-light mb-8">{date}</p>
