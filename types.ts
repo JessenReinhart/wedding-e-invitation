@@ -49,6 +49,9 @@ export interface WeddingDetails {
   groomDetails: PartnerDetails;
   brideDetails: PartnerDetails;
   giftInfo?: GiftInfo;
+  biblicalVerse: string;
+  verseReference: string;
+  coupleImage: string;
 }
 
 export interface Guest {

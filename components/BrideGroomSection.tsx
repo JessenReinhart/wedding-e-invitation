@@ -2,42 +2,36 @@ import React from 'react';
 import SectionWrapper from './SectionWrapper';
 
 interface BrideGroomSectionProps {
-  brideName: string;
-  brideImage: string;
-  groomName: string;
-  groomImage: string;
+  coupleImage: string;
+  biblicalVerse: string;
+  verseReference: string;
 }
 
 const BrideGroomSection: React.FC<BrideGroomSectionProps> = ({
-  brideName,
-  brideImage,
-  groomName,
-  groomImage,
+  coupleImage,
+  biblicalVerse,
+  verseReference,
 }) => {
   return (
-    <SectionWrapper id="bride-groom" className="bg-cream pattern-bg" title="Mengenal Pasangan">
-      <div className="flex flex-col md:flex-row items-center justify-center gap-12 text-center">
-        {/* Bride's Section */}
-        <div className="flex flex-col items-center animate-fade-in-up">
+    <SectionWrapper id="bride-groom" className="bg-cream pattern-bg">
+      <div className="flex flex-col items-center justify-center text-center max-w-4xl mx-auto">
+        {/* Couple Photo */}
+        <div className="animate-fade-in-up mb-8">
           <img
-            src={brideImage}
-            alt={brideName}
-            className="w-48 h-48 rounded-full object-cover shadow-lg mb-4 border-4 border-rose-gold"
+            src={coupleImage}
+            alt="Pasangan tersenyum"
+            className="w-full max-w-md md:max-w-lg lg:max-w-xl h-auto rounded-lg object-cover shadow-lg border-4 border-rose-gold"
           />
-          <h3 className="text-3xl font-serif text-deep-green mb-2">{brideName}</h3>
         </div>
 
-        {/* Separator */}
-        <div className="text-5xl font-serif text-rose-gold hidden md:block">&#x26;</div>
-
-        {/* Groom's Section */}
-        <div className="flex flex-col items-center animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-          <img
-            src={groomImage}
-            alt={groomName}
-            className="w-48 h-48 rounded-full object-cover shadow-lg mb-4 border-4 border-rose-gold"
-          />
-          <h3 className="text-3xl font-serif text-deep-green mb-2">{groomName}</h3>
+        {/* Biblical Verse */}
+        <div className="animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+          <blockquote className="text-lg md:text-xl lg:text-2xl font-serif text-deep-green leading-relaxed mb-4 italic px-4">
+            "{biblicalVerse}"
+          </blockquote>
+          <cite className="text-base md:text-lg font-serif text-rose-gold font-semibold">
+            {verseReference}
+          </cite>
         </div>
       </div>
     </SectionWrapper>

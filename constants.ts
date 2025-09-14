@@ -91,5 +91,8 @@ export const WEDDING_DETAILS: WeddingDetails = {
       postalCode: "16417",
       country: "Indonesia"
     }
-  }
+  },
+  biblicalVerse: "Demikianlah mereka bukan lagi dua, melainkan satu. Karena itu, apa yang telah di persatukan Allah, tidak boleh diceraikan manusia.",
+  verseReference: "Matius 19 : 6",
+  coupleImage: 'https://www.imgtap.com/images/2025/09/14/EDITED-0013-min.jpg'
 };

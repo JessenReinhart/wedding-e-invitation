@@ -135,10 +135,9 @@ const App: React.FC = () => {
                   {isInvitationOpened && (
                     <div className="invitation-content-reveal">
                       <BrideGroomSection
-                        brideName={WEDDING_DETAILS.brideName}
-                        brideImage={WEDDING_DETAILS.brideImage}
-                        groomName={WEDDING_DETAILS.groomName}
-                        groomImage={WEDDING_DETAILS.groomImage}
+                        coupleImage={WEDDING_DETAILS.coupleImage}
+                        biblicalVerse={WEDDING_DETAILS.biblicalVerse}
+                        verseReference={WEDDING_DETAILS.verseReference}
                       />
                       <IndividualPartnerSections
                         groom={WEDDING_DETAILS.groomDetails}
@@ -149,7 +148,7 @@ const App: React.FC = () => {
                         ceremony={WEDDING_DETAILS.ceremony}
                         reception={WEDDING_DETAILS.reception}
                       />
-                      <RSVPSection rsvpDate={WEDDING_DETAILS.rsvpByDate} />
+                      <RSVPSection />
                       <WeddingGiftSection giftInfo={WEDDING_DETAILS.giftInfo} />
                       <GallerySection images={WEDDING_DETAILS.galleryImages} />
                       <MessageFromCouple

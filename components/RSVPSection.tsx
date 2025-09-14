@@ -2,11 +2,9 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import SectionWrapper from './SectionWrapper';
 
-interface RSVPSectionProps {
-  rsvpDate: string;
-}
+interface RSVPSectionProps {}
 
-const RSVPSection: React.FC<RSVPSectionProps> = ({ rsvpDate }) => {
+const RSVPSection: React.FC<RSVPSectionProps> = () => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const visitorName = params.get('name');
@@ -14,11 +12,8 @@ const RSVPSection: React.FC<RSVPSectionProps> = ({ rsvpDate }) => {
   return (
     <SectionWrapper id="rsvp" className="bg-soft-blush pattern2-bg" title="Mohon Konfirmasi Kehadiran">
       <div className="text-center animate-fade-in-up">
-        <p className="text-lg md:text-xl text-charcoal-gray mb-4">
-          Dimohon untuk mengisi konfirmasi kehadiran di bawah ini sebelum <strong className="text-deep-green">{rsvpDate}</strong>.
-        </p>
-        <p className="text-md text-slate-600 mb-10">
-          Klik tombol untuk mengakses formulir RSVP kami.
+        <p className="text-lg md:text-xl text-charcoal-gray mb-10">
+          Dimohon untuk mengisi konfirmasi kehadiran di bawah ini.
         </p>
 
         <div className="flex flex-col items-center space-y-8">
