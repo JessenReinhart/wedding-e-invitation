@@ -3,6 +3,8 @@ import React from 'react';
 import { EventInfo } from '../types';
 import SectionWrapper from './SectionWrapper';
 import EventDetailsCard from './EventDetailsCard';
+import Countdown from './Countdown';
+import { WEDDING_DETAILS } from '../constants';
 
 interface EventTimelineProps {
   ceremony: EventInfo;
@@ -28,7 +30,16 @@ const EventTimeline: React.FC<EventTimelineProps> = ({ ceremony, reception }) =>
       <div className="text-center mb-16 animate-fade-in-up">
         <p className="text-lg text-slate-600">Bergabunglah dengan kami untuk momen-momen istimewa ini.</p>
       </div>
-      <div className="grid md:grid-cols-2 gap-10 md:gap-12 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+      
+      {/* Countdown Component */}
+      <div className="mb-12 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+        <Countdown 
+          targetDate={WEDDING_DETAILS.date}
+          className="max-w-4xl mx-auto"
+        />
+      </div>
+
+      <div className="grid md:grid-cols-2 gap-10 md:gap-12 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
         <EventDetailsCard event={ceremony} icon={<CeremonyIcon />} />
         <EventDetailsCard event={reception} icon={<ReceptionIcon />} />
       </div>

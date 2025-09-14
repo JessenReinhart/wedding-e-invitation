@@ -43,8 +43,12 @@ const IndividualPartnerSections: React.FC<IndividualPartnerSectionsProps> = ({
       }
 
       const img = new Image();
-      img.onload = () => setImageState({ loaded: true, error: false });
-      img.onerror = () => setImageState({ loaded: false, error: true });
+      img.onload = () => {
+        setImageState({ loaded: true, error: false });
+      };
+      img.onerror = () => {
+        setImageState({ loaded: false, error: true });
+      };
       img.src = src;
     };
 

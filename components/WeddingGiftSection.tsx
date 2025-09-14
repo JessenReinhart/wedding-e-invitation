@@ -11,20 +11,27 @@ interface WeddingGiftSectionProps {
   giftInfo: GiftInfo | null | undefined;
 }
 
+// Validation function for bank account data
+const validateBankAccount = (bankAccount: any): boolean => {
+  if (!bankAccount) return false;
+
+  const { bankName, accountNumber, accountHolderName } = bankAccount;
+
+  return !!(
+    bankName && bankName.trim() &&
+    accountNumber && accountNumber.trim() &&
+    accountHolderName && accountHolderName.trim()
+  );
+};
+
 // Validation function for gift info
 const validateGiftInfo = (giftInfo: GiftInfo | null | undefined): boolean => {
   if (!giftInfo) return false;
 
   // Check if at least one of the gift options is available
-  const hasBankAccount = !!(
-    giftInfo.bankAccount &&
-    giftInfo.bankAccount.bankName &&
-    giftInfo.bankAccount.bankName.trim() &&
-    giftInfo.bankAccount.accountNumber &&
-    giftInfo.bankAccount.accountNumber.trim() &&
-    giftInfo.bankAccount.accountHolderName &&
-    giftInfo.bankAccount.accountHolderName.trim()
-  );
+  const hasBankAccount = validateBankAccount(giftInfo.bankAccount);
+  const hasAnjelBankAccount = validateBankAccount(giftInfo.anjelBankAccount);
+  const hasMathewBankAccount = validateBankAccount(giftInfo.mathewBankAccount);
 
   const hasDeliveryAddress = !!(
     giftInfo.deliveryAddress &&
@@ -40,7 +47,7 @@ const validateGiftInfo = (giftInfo: GiftInfo | null | undefined): boolean => {
     giftInfo.deliveryAddress.country.trim()
   );
 
-  return hasBankAccount || hasDeliveryAddress;
+  return hasBankAccount || hasAnjelBankAccount || hasMathewBankAccount || hasDeliveryAddress;
 };
 
 // Placeholder component for when no gift information is available
@@ -101,7 +108,7 @@ const WeddingGiftSection: React.FC<WeddingGiftSectionProps> = ({ giftInfo }) => 
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 max-w-4xl mx-auto">
         {/* Bank Account Information */}
         <div className="space-y-4">
           <GiftInfoToggle
@@ -109,7 +116,13 @@ const WeddingGiftSection: React.FC<WeddingGiftSectionProps> = ({ giftInfo }) => 
             icon={<FontAwesomeIcon icon={faUniversity} />}
             className="w-full"
           >
-            <BankAccountInfo bankAccount={giftInfo?.bankAccount} />
+            <BankAccountInfo
+              brideAccount={giftInfo?.anjelBankAccount}
+              groomAccount={giftInfo?.mathewBankAccount}
+              onCopy={(accountInfo, ownerName) => {
+                console.log(`Copied ${ownerName ? `${ownerName}'s` : ''} account info:`, accountInfo);
+              }}
+            />
           </GiftInfoToggle>
         </div>
 

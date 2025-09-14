@@ -17,7 +17,7 @@ import { WEDDING_DETAILS } from './constants';
 import { Toaster } from 'react-hot-toast';
 import MusicPlayer from './components/MusicPlayer';
 import { MusicProvider } from './hooks/MusicContext';
-import { useScrollLock } from './hooks/useScrollLock';
+
 
 import BrideGroomSection from './components/BrideGroomSection';
 import IndividualPartnerSections from './components/IndividualPartnerSections';
@@ -29,11 +29,8 @@ const App: React.FC = () => {
   const [partnerImagesLoaded, setPartnerImagesLoaded] = useState(false);
   const location = useLocation();
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-  const [isScrollLocked, setIsScrollLocked] = useState(() => {
-    // Check if scroll was already unlocked in this session
-    const wasUnlocked = sessionStorage.getItem('scrollUnlocked');
-    return !wasUnlocked;
-  });
+  const [isInvitationOpened, setIsInvitationOpened] = useState(false);
+  const [isInvitationAnimating, setIsInvitationAnimating] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -53,6 +50,24 @@ const App: React.FC = () => {
     }
   }, [heroLoaded, partnerImagesLoaded]);
 
+  // Fallback: Hide loader after 3 seconds regardless of image loading status
+  useEffect(() => {
+    const fallbackTimer = setTimeout(() => {
+      if (loading) {
+        setLoading(false);
+      }
+    }, 3000);
+
+    return () => clearTimeout(fallbackTimer);
+  }, [loading]);
+
+  // Additional fallback: Hide loader if we're not on home page
+  useEffect(() => {
+    if (location.pathname !== '/' && loading) {
+      setLoading(false);
+    }
+  }, [location.pathname, loading]);
+
   const handleHeroLoaded = () => {
     setHeroLoaded(true);
   };
@@ -61,37 +76,33 @@ const App: React.FC = () => {
     setPartnerImagesLoaded(true);
   };
 
-  const handleScrollUnlock = () => {
-    setIsScrollLocked(false);
-    // Mark as unlocked in session storage
-    sessionStorage.setItem('scrollUnlocked', 'true');
-    // Smooth scroll to bride-groom section after a brief delay
+  const handleInvitationOpen = () => {
+    setIsInvitationAnimating(true);
+    // After animation completes, show content and scroll
     setTimeout(() => {
-      const brideGroomElement = document.getElementById('bride-groom');
-      if (brideGroomElement) {
-        brideGroomElement.scrollIntoView({ behavior: 'smooth' });
-      }
-    }, 100);
+      setIsInvitationOpened(true);
+      setIsInvitationAnimating(false);
+      // Smooth scroll to bride-groom section
+      setTimeout(() => {
+        const brideGroomElement = document.getElementById('bride-groom');
+        if (brideGroomElement) {
+          brideGroomElement.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    }, 1000); // Match animation duration
   };
 
-  // Reset scroll lock when navigating away from home page
+  // Reset invitation state when navigating away from home page
   useEffect(() => {
-    if (location.pathname !== '/') {
-      setIsScrollLocked(false);
-    } else {
-      // Check session storage when returning to home page
-      const wasUnlocked = sessionStorage.getItem('scrollUnlocked');
-      setIsScrollLocked(!wasUnlocked);
+    if (location.pathname === '/') {
+      setIsInvitationOpened(false);
+      setIsInvitationAnimating(false);
     }
   }, [location.pathname]);
 
-  // Initialize scroll lock hook
-  useScrollLock({
-    isLocked: isScrollLocked && location.pathname === '/',
-    onUnlock: handleScrollUnlock
-  }); 
-
   const showLoader = loading && location.pathname === '/';
+
+
 
   return (
     <MusicProvider>
@@ -117,32 +128,37 @@ const App: React.FC = () => {
                     heroImage={WEDDING_DETAILS.heroImage}
                     heroMobileImage={WEDDING_DETAILS.heroMobileImage}
                     onImageLoad={handleHeroLoaded}
-                    isScrollLocked={isScrollLocked}
-                    onScrollUnlock={handleScrollUnlock}
+                    onInvitationOpen={handleInvitationOpen}
+                    isInvitationOpened={isInvitationOpened}
+                    isInvitationAnimating={isInvitationAnimating}
                   />
-                  <BrideGroomSection
-                    brideName={WEDDING_DETAILS.brideName}
-                    brideImage={WEDDING_DETAILS.brideImage}
-                    groomName={WEDDING_DETAILS.groomName}
-                    groomImage={WEDDING_DETAILS.groomImage}
-                  />
-                  <IndividualPartnerSections
-                    groom={WEDDING_DETAILS.groomDetails}
-                    bride={WEDDING_DETAILS.brideDetails}
-                    onImagesLoad={handlePartnerImagesLoaded}
-                  />
-                  <EventTimeline
-                    ceremony={WEDDING_DETAILS.ceremony}
-                    reception={WEDDING_DETAILS.reception}
-                  />
-                  <RSVPSection rsvpDate={WEDDING_DETAILS.rsvpByDate} />
-                  <WeddingGiftSection giftInfo={WEDDING_DETAILS.giftInfo} />
-                  <GallerySection images={WEDDING_DETAILS.galleryImages} />
-                  <MessageFromCouple
-                    brideName={WEDDING_DETAILS.brideName}
-                    groomName={WEDDING_DETAILS.groomName}
-                  />
-                  <CommentSection />
+                  {isInvitationOpened && (
+                    <div className="invitation-content-reveal">
+                      <BrideGroomSection
+                        brideName={WEDDING_DETAILS.brideName}
+                        brideImage={WEDDING_DETAILS.brideImage}
+                        groomName={WEDDING_DETAILS.groomName}
+                        groomImage={WEDDING_DETAILS.groomImage}
+                      />
+                      <IndividualPartnerSections
+                        groom={WEDDING_DETAILS.groomDetails}
+                        bride={WEDDING_DETAILS.brideDetails}
+                        onImagesLoad={handlePartnerImagesLoaded}
+                      />
+                      <EventTimeline
+                        ceremony={WEDDING_DETAILS.ceremony}
+                        reception={WEDDING_DETAILS.reception}
+                      />
+                      <RSVPSection rsvpDate={WEDDING_DETAILS.rsvpByDate} />
+                      <WeddingGiftSection giftInfo={WEDDING_DETAILS.giftInfo} />
+                      <GallerySection images={WEDDING_DETAILS.galleryImages} />
+                      <MessageFromCouple
+                        brideName={WEDDING_DETAILS.brideName}
+                        groomName={WEDDING_DETAILS.groomName}
+                      />
+                      <CommentSection />
+                    </div>
+                  )}
                 </>
               }
             />

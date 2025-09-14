@@ -1,89 +1,132 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faExclamationTriangle, faCopy } from '@fortawesome/free-solid-svg-icons';
 import { BankAccountInfo as BankAccountInfoType } from '../types';
 
 interface BankAccountInfoProps {
-  bankAccount: BankAccountInfoType | null | undefined;
+  brideAccount?: BankAccountInfoType | null | undefined;
+  groomAccount?: BankAccountInfoType | null | undefined;
+  onCopy?: (accountInfo: string, ownerName?: string) => void;
 }
 
-// Validation function for bank account data
 const validateBankAccount = (bankAccount: BankAccountInfoType | null | undefined): boolean => {
   if (!bankAccount) return false;
-  
   const { bankName, accountNumber, accountHolderName } = bankAccount;
-  
-  return !!(
-    bankName && bankName.trim() &&
-    accountNumber && accountNumber.trim() &&
-    accountHolderName && accountHolderName.trim()
+  return !!(bankName?.trim() && accountNumber?.trim() && accountHolderName?.trim());
+};
+
+const IndividualBankAccount: React.FC<{
+  bankAccount: BankAccountInfoType;
+  ownerName: string;
+  onCopy?: (accountInfo: string, ownerName: string) => void;
+}> = ({ bankAccount, ownerName, onCopy }) => {
+  const { bankName, accountNumber, accountHolderName } = bankAccount;
+
+  const handleCopy = () => {
+    const accountInfo = `${bankName}\n${accountNumber}\n${accountHolderName}`;
+    navigator.clipboard.writeText(accountInfo).then(() => {
+      onCopy?.(accountInfo, ownerName);
+    });
+  };
+
+  return (
+    <div className="bg-slate-50 p-4 rounded-lg border border-slate-200 relative">
+        <div className="text-center mb-4">
+          <h4 className="text-lg font-semibold text-deep-green">{ownerName}</h4>
+        </div>
+      <div className="space-y-3">
+        <div>
+          <label className="block text-sm font-semibold text-deep-green mb-1">
+            Nama Bank
+          </label>
+          <p className="text-charcoal-gray font-medium">{bankName}</p>
+        </div>
+
+        <div>
+          <label className="block text-sm font-semibold text-deep-green mb-1">
+            Nomor Rekening
+          </label>
+          <p className="text-charcoal-gray font-mono text-lg font-semibold tracking-wider">
+            {accountNumber}
+          </p>
+        </div>
+
+        <div>
+          <label className="block text-sm font-semibold text-deep-green mb-1">
+            Nama Pemegang Rekening
+          </label>
+          <p className="text-charcoal-gray font-medium">{accountHolderName}</p>
+        </div>
+      </div>
+
+      {onCopy && (
+        <button
+          onClick={handleCopy}
+          className="absolute top-3 right-3 p-2 text-slate-500 hover:text-deep-green transition-colors duration-200"
+          title="Salin informasi rekening"
+        >
+          <FontAwesomeIcon icon={faCopy} className="text-sm" />
+        </button>
+      )}
+    </div>
   );
 };
 
-// Placeholder component for missing bank account information
 const BankAccountPlaceholder: React.FC = () => (
-  <div className="space-y-4">
-    <div className="bg-slate-50 p-6 rounded-lg border border-slate-200 text-center">
-      <div className="text-slate-500 mb-2">
-        <svg className="w-12 h-12 mx-auto mb-3 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
-        </svg>
-        <p className="text-sm font-medium text-slate-600">
-          Informasi rekening bank tidak tersedia
-        </p>
-        <p className="text-xs text-slate-500 mt-1">
-          Silakan hubungi pengantin untuk informasi lebih lanjut
-        </p>
-      </div>
+  <div className="text-center py-8">
+    <div className="max-w-md mx-auto">
+      <FontAwesomeIcon
+        icon={faExclamationTriangle}
+        className="text-3xl text-slate-400 mb-4"
+      />
+      <h3 className="text-lg font-semibold text-charcoal-gray mb-2">
+        Informasi Rekening Tidak Tersedia
+      </h3>
+      <p className="text-slate-600 mb-4">
+        Informasi rekening bank sedang tidak tersedia saat ini.
+      </p>
+      <p className="text-sm text-slate-500">
+        Silakan hubungi pengantin langsung untuk informasi rekening bank.
+      </p>
     </div>
   </div>
 );
 
-const BankAccountInfo: React.FC<BankAccountInfoProps> = ({ bankAccount }) => {
-  // Validate bank account data
-  if (!validateBankAccount(bankAccount)) {
+const BankAccountInfo: React.FC<BankAccountInfoProps> = ({
+  brideAccount,
+  groomAccount,
+  onCopy
+}) => {
+  const hasBrideAccount = validateBankAccount(brideAccount);
+  const hasGroomAccount = validateBankAccount(groomAccount);
+
+  if (!hasBrideAccount && !hasGroomAccount) {
     return <BankAccountPlaceholder />;
   }
 
-  // Safe to access properties after validation
-  const { bankName, accountNumber, accountHolderName } = bankAccount!;
+    const accounts = [];
+    if (hasBrideAccount) accounts.push({ account: brideAccount!, ownerName: 'Bride' });
+    if (hasGroomAccount) accounts.push({ account: groomAccount!, ownerName: 'Groom' });
 
-  return (
-    <div className="space-y-4">
-      <div className="bg-slate-50 p-4 rounded-lg border border-slate-200">
-        <div className="space-y-3">
-          <div>
-            <label className="block text-sm font-semibold text-deep-green mb-1">
-              Nama Bank
-            </label>
-            <p className="text-charcoal-gray font-medium">
-              {bankName}
-            </p>
-          </div>
-          
-          <div>
-            <label className="block text-sm font-semibold text-deep-green mb-1">
-              Nomor Rekening
-            </label>
-            <p className="text-charcoal-gray font-mono text-lg font-semibold tracking-wider">
-              {accountNumber}
-            </p>
-          </div>
-          
-          <div>
-            <label className="block text-sm font-semibold text-deep-green mb-1">
-              Nama Pemegang Rekening
-            </label>
-            <p className="text-charcoal-gray font-medium">
-              {accountHolderName}
-            </p>
-          </div>
+    return (
+      <div className="space-y-6">
+        <div className={`space-y-6 ${accounts.length === 1 ? 'max-w-md mx-auto' : ''}`}>
+          {accounts.map(({ account, ownerName }) => (
+            <IndividualBankAccount
+              key={ownerName}
+              bankAccount={account}
+              ownerName={ownerName}
+            onCopy={onCopy}
+            />
+          ))}
+        </div>
+        <div className="text-center">
+          <p className="text-sm text-slate-600 italic">
+            Silakan {accounts.length > 1 ? 'pilih salah satu rekening' : 'gunakan informasi rekening'} di atas untuk transfer hadiah pernikahan.
+          </p>
         </div>
       </div>
-      
-      <div className="text-sm text-slate-600 italic">
-        Silakan gunakan informasi rekening di atas untuk transfer hadiah pernikahan.
-      </div>
-    </div>
-  );
+    );
 };
 
 export default BankAccountInfo;

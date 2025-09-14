@@ -15,7 +15,7 @@ const RSVPSection: React.FC<RSVPSectionProps> = ({ rsvpDate }) => {
     <SectionWrapper id="rsvp" className="bg-soft-blush pattern2-bg" title="Mohon Konfirmasi Kehadiran">
       <div className="text-center animate-fade-in-up">
         <p className="text-lg md:text-xl text-charcoal-gray mb-4">
-          Mohon beri tahu kami apakah Anda dapat merayakan bersama kami sebelum <strong className="text-deep-green">{rsvpDate}</strong>.
+          Dimohon untuk mengisi konfirmasi kehadiran di bawah ini sebelum <strong className="text-deep-green">{rsvpDate}</strong>.
         </p>
         <p className="text-md text-slate-600 mb-10">
           Klik tombol untuk mengakses formulir RSVP kami.

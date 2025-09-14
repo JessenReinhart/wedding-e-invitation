@@ -232,4 +232,105 @@ ll Lock Styles */
   .cta-button-locked {
     box-shadow: 0 0 15px rgba(183, 110, 121, 0.5);
   }
+}/* Countdo
+wn Component Animations */
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-pulse-subtle {
+  animation: pulseSubtle 3s ease-in-out infinite;
+}
+
+@keyframes pulseSubtle {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.95;
+    transform: scale(1.01);
+  }
+}
+
+/* Reduced motion preferences for countdown */
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in-up,
+  .animate-pulse-subtle {
+    animation: none;
+  }
+}
+
+/* Invitation Opening Animations */
+.invitation-opening {
+  animation: invitationSlideUp 1s ease-out forwards;
+}
+
+.invitation-content-reveal {
+  animation: contentFadeInUp 1s ease-out 0.3s both;
+}
+
+@keyframes invitationSlideUp {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100vh);
+    opacity: 0;
+  }
+}
+
+@keyframes contentFadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Pulse animation for scroll indicator */
+.animate-pulse-slow {
+  animation: pulseSlow 2s ease-in-out infinite;
+}
+
+@keyframes pulseSlow {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Reduced motion preferences for invitation animations */
+@media (prefers-reduced-motion: reduce) {
+  .invitation-opening,
+  .invitation-content-reveal,
+  .animate-pulse-slow {
+    animation: none;
+  }
+  
+  .invitation-opening {
+    display: none;
+  }
+  
+  .invitation-content-reveal {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

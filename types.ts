@@ -66,6 +66,41 @@ export interface BankAccountInfo {
   accountHolderName?: string;
 }
 
+export interface EnhancedBankAccountInfo extends BankAccountInfo {
+  ownerName: string;
+  copyText?: string;
+}
+
+export interface IndividualBankAccountProps {
+  bankAccount: EnhancedBankAccountInfo;
+  ownerName: string;
+  onCopy?: (accountInfo: string) => void;
+}
+
+export interface DualBankAccountProps {
+  anjelAccount: EnhancedBankAccountInfo;
+  mathewAccount: EnhancedBankAccountInfo;
+}
+
+export interface DualBankAccountInfo {
+  anjel: EnhancedBankAccountInfo;
+  mathew: EnhancedBankAccountInfo;
+}
+
+export interface CountdownProps {
+  targetDate: string;
+  onComplete?: () => void;
+  className?: string;
+}
+
+export interface CountdownState {
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+  isComplete: boolean;
+}
+
 export interface DeliveryAddress {
   recipientName?: string;
   streetAddress?: string;
@@ -76,5 +111,8 @@ export interface DeliveryAddress {
 
 export interface GiftInfo {
   bankAccount?: BankAccountInfo;
+  anjelBankAccount?: BankAccountInfo;
+  mathewBankAccount?: BankAccountInfo;
+  dualBankAccounts?: DualBankAccountInfo;
   deliveryAddress?: DeliveryAddress;
 }

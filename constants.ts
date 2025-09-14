@@ -60,6 +60,30 @@ export const WEDDING_DETAILS: WeddingDetails = {
       accountNumber: "1234567890",
       accountHolderName: "Mathew Agape Sitorus & Anjelia Septriani Siahaan"
     },
+    anjelBankAccount: {
+      bankName: "Bank Central Asia (BCA)",
+      accountNumber: "1234567891",
+      accountHolderName: "Anjelia Septriani Siahaan"
+    },
+    mathewBankAccount: {
+      bankName: "Bank Mandiri",
+      accountNumber: "9876543210",
+      accountHolderName: "Mathew Agape Sitorus"
+    },
+    dualBankAccounts: {
+      anjel: {
+        bankName: "Bank Central Asia (BCA)",
+        accountNumber: "1234567891",
+        accountHolderName: "Anjelia Septriani Siahaan",
+        ownerName: "Anjel"
+      },
+      mathew: {
+        bankName: "Bank Mandiri",
+        accountNumber: "9876543210",
+        accountHolderName: "Mathew Agape Sitorus",
+        ownerName: "Mathew"
+      }
+    },
     deliveryAddress: {
       recipientName: "Mathew & Anjelia",
       streetAddress: "Jl. Kebahagiaan No.78, RT 10/01",
