@@ -1,27 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
-import AdminPage from './components/AdminPage';
-import CommentSection from './components/CommentSection';
-import EventTimeline from './components/EventTimeline';
-import Footer from './components/Footer';
-import GallerySection from './components/GallerySection';
-import Header from './components/Header';
-import Hero from './components/Hero';
-import LoginPage from './components/LoginPage';
-import MessageFromCouple from './components/MessageFromCouple';
-import PrivateRoute from './components/PrivateRoute';
-import RSVPPage from './components/RSVPPage';
-import RSVPSection from './components/RSVPSection';
-import { WEDDING_DETAILS } from './constants';
+import React, { useEffect, useState } from "react";
+import { Route, Routes, useLocation } from "react-router-dom";
+import AdminPage from "./components/AdminPage";
+import CommentSection from "./components/CommentSection";
+import EventTimeline from "./components/EventTimeline";
+import Footer from "./components/Footer";
+import GallerySection from "./components/GallerySection";
+import Header from "./components/Header";
+import Hero from "./components/Hero";
+import LoginPage from "./components/LoginPage";
+import MessageFromCouple from "./components/MessageFromCouple";
+import PrivateRoute from "./components/PrivateRoute";
+import RSVPPage from "./components/RSVPPage";
+import RSVPSection from "./components/RSVPSection";
+import { WEDDING_DETAILS } from "./constants";
 
-import { Toaster } from 'react-hot-toast';
-import MusicPlayer from './components/MusicPlayer';
-import { MusicProvider } from './hooks/MusicContext';
+import { Toaster } from "react-hot-toast";
+import MusicPlayer from "./components/MusicPlayer";
+import { MusicProvider } from "./hooks/MusicContext";
 
-
-import BrideGroomSection from './components/BrideGroomSection';
-import IndividualPartnerSections from './components/IndividualPartnerSections';
-import WeddingGiftSection from './components/WeddingGiftSection';
+import BrideGroomSection from "./components/BrideGroomSection";
+import IndividualPartnerSections from "./components/IndividualPartnerSections";
+import WeddingGiftSection from "./components/WeddingGiftSection";
 
 const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
@@ -36,9 +35,9 @@ const App: React.FC = () => {
       setIsMobile(window.innerWidth <= 768);
     };
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
@@ -49,11 +48,9 @@ const App: React.FC = () => {
     }
   }, [heroLoaded]);
 
-  
-
   // Additional fallback: Hide loader if we're not on home page
   useEffect(() => {
-    if (location.pathname !== '/' && loading) {
+    if (location.pathname !== "/" && loading) {
       setLoading(false);
     }
   }, [location.pathname, loading]);
@@ -70,9 +67,9 @@ const App: React.FC = () => {
       setIsInvitationAnimating(false);
       // Smooth scroll to bride-groom section
       setTimeout(() => {
-        const brideGroomElement = document.getElementById('bride-groom');
+        const brideGroomElement = document.getElementById("bride-groom");
         if (brideGroomElement) {
-          brideGroomElement.scrollIntoView({ behavior: 'smooth' });
+          brideGroomElement.scrollIntoView({ behavior: "smooth" });
         }
       }, 100);
     }, 1000); // Match animation duration
@@ -80,15 +77,13 @@ const App: React.FC = () => {
 
   // Reset invitation state when navigating away from home page
   useEffect(() => {
-    if (location.pathname === '/') {
+    if (location.pathname === "/") {
       setIsInvitationOpened(false);
       setIsInvitationAnimating(false);
     }
   }, [location.pathname]);
 
-  const showLoader = loading && location.pathname === '/';
-
-
+  const showLoader = loading && location.pathname === "/";
 
   return (
     <MusicProvider>
@@ -100,8 +95,13 @@ const App: React.FC = () => {
         )}
         {!isMobile && <MusicPlayer className="music-player-desktop" />}
         <Toaster position="bottom-center" />
-        <Header brideName={WEDDING_DETAILS.brideName} groomName={WEDDING_DETAILS.groomName} isMobile={isMobile} isInvitationOpened={isInvitationOpened} />
-        <main className={showLoader ? 'hidden' : ''}>
+        <Header
+          brideName={WEDDING_DETAILS.brideName}
+          groomName={WEDDING_DETAILS.groomName}
+          isMobile={isMobile}
+          isInvitationOpened={isInvitationOpened}
+        />
+        <main className={showLoader ? "hidden" : ""}>
           <Routes>
             <Route
               path="/"
@@ -117,6 +117,7 @@ const App: React.FC = () => {
                     onInvitationOpen={handleInvitationOpen}
                     isInvitationOpened={isInvitationOpened}
                     isInvitationAnimating={isInvitationAnimating}
+                    isMobile={isMobile}
                   />
                   {isInvitationOpened && (
                     <div className="invitation-content-reveal">
@@ -165,4 +166,3 @@ const App: React.FC = () => {
 };
 
 export default App;
-

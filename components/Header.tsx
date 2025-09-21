@@ -100,7 +100,7 @@ const Header: React.FC<HeaderProps> = ({
         <nav
           className={`${isMobile && !isScrolled && !isAdminPage ? "hidden" : ""} md:block`}
         >
-          <ul className="flex justify-between md:space-x-8 w-full">
+          <ul className="flex justify-between md:space-x-8 w-full text-center">
             <li className="px-2">
               <a
                 href="#bride-groom"
@@ -121,7 +121,7 @@ const Header: React.FC<HeaderProps> = ({
                   icon={faBookOpen}
                   className="text-lg md:hidden"
                 />
-                <span className="text-xs md:text-base">Tentang Kita</span>
+                <span className="text-xs md:text-base">Pasangan</span>
               </a>
             </li>
             <li className="px-2">
