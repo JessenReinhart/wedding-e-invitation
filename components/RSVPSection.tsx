@@ -1,16 +1,20 @@
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import SectionWrapper from './SectionWrapper';
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
+import SectionWrapper from "./SectionWrapper";
 
 interface RSVPSectionProps {}
 
 const RSVPSection: React.FC<RSVPSectionProps> = () => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  const visitorName = params.get('name');
+  const visitorName = params.get("name");
 
   return (
-    <SectionWrapper id="rsvp" className="bg-soft-blush pattern2-bg" title="Mohon Konfirmasi Kehadiran">
+    <SectionWrapper
+      id="rsvp"
+      className="bg-soft-blush pattern2-bg"
+      title="Mohon Konfirmasi Kehadiran"
+    >
       <div className="text-center animate-fade-in-up">
         <p className="text-lg md:text-xl text-charcoal-gray mb-10">
           Dimohon untuk mengisi konfirmasi kehadiran di bawah ini.
@@ -24,9 +28,6 @@ const RSVPSection: React.FC<RSVPSectionProps> = () => {
             RSVP Online
           </Link>
         </div>
-        <p className="mt-8 text-sm text-slate-500">
-          Kami tidak sabar untuk berbagi hari istimewa kami dengan Anda!
-        </p>
       </div>
     </SectionWrapper>
   );

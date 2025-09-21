@@ -1,4 +1,5 @@
 import React from 'react';
+import toast from 'react-hot-toast';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUniversity, faMapMarkerAlt, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import SectionWrapper from './SectionWrapper';
@@ -120,7 +121,7 @@ const WeddingGiftSection: React.FC<WeddingGiftSectionProps> = ({ giftInfo }) => 
               brideAccount={giftInfo?.anjelBankAccount}
               groomAccount={giftInfo?.mathewBankAccount}
               onCopy={(accountInfo, ownerName) => {
-                console.log(`Copied ${ownerName ? `${ownerName}'s` : ''} account info:`, accountInfo);
+                toast.success(`${ownerName ? `${ownerName}'s` : ''} account info copied to clipboard!`);
               }}
             />
           </GiftInfoToggle>

@@ -26,7 +26,6 @@ import WeddingGiftSection from './components/WeddingGiftSection';
 const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [heroLoaded, setHeroLoaded] = useState(false);
-  const [partnerImagesLoaded, setPartnerImagesLoaded] = useState(false);
   const location = useLocation();
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [isInvitationOpened, setIsInvitationOpened] = useState(false);
@@ -43,23 +42,14 @@ const App: React.FC = () => {
     };
   }, []);
 
-  // Update loading state when both hero and partner images are loaded
+  // Update loading state when hero image is loaded
   useEffect(() => {
-    if (heroLoaded && partnerImagesLoaded) {
+    if (heroLoaded) {
       setLoading(false);
     }
-  }, [heroLoaded, partnerImagesLoaded]);
+  }, [heroLoaded]);
 
-  // Fallback: Hide loader after 3 seconds regardless of image loading status
-  useEffect(() => {
-    const fallbackTimer = setTimeout(() => {
-      if (loading) {
-        setLoading(false);
-      }
-    }, 3000);
-
-    return () => clearTimeout(fallbackTimer);
-  }, [loading]);
+  
 
   // Additional fallback: Hide loader if we're not on home page
   useEffect(() => {
@@ -70,10 +60,6 @@ const App: React.FC = () => {
 
   const handleHeroLoaded = () => {
     setHeroLoaded(true);
-  };
-
-  const handlePartnerImagesLoaded = () => {
-    setPartnerImagesLoaded(true);
   };
 
   const handleInvitationOpen = () => {
@@ -113,8 +99,8 @@ const App: React.FC = () => {
           </div>
         )}
         {!isMobile && <MusicPlayer className="music-player-desktop" />}
-        <Toaster />
-        <Header brideName={WEDDING_DETAILS.brideName} groomName={WEDDING_DETAILS.groomName} isMobile={isMobile} />
+        <Toaster position="bottom-center" />
+        <Header brideName={WEDDING_DETAILS.brideName} groomName={WEDDING_DETAILS.groomName} isMobile={isMobile} isInvitationOpened={isInvitationOpened} />
         <main className={showLoader ? 'hidden' : ''}>
           <Routes>
             <Route
@@ -142,7 +128,6 @@ const App: React.FC = () => {
                       <IndividualPartnerSections
                         groom={WEDDING_DETAILS.groomDetails}
                         bride={WEDDING_DETAILS.brideDetails}
-                        onImagesLoad={handlePartnerImagesLoaded}
                       />
                       <EventTimeline
                         ceremony={WEDDING_DETAILS.ceremony}
@@ -173,7 +158,7 @@ const App: React.FC = () => {
             <Route path="/rsvp" element={<RSVPPage />} />
           </Routes>
         </main>
-        <Footer />
+        {isInvitationOpened && <Footer />}
       </div>
     </MusicProvider>
   );

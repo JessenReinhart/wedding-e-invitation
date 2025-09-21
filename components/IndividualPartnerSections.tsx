@@ -1,14 +1,14 @@
-import { faInstagram } from '@fortawesome/free-brands-svg-icons';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useEffect, useState } from 'react';
-import { PartnerDetails } from '../types';
-import { useDeviceDetection } from '../utils/deviceDetection';
+import { faInstagram } from "@fortawesome/free-brands-svg-icons";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useEffect, useState } from "react";
+import { PartnerDetails } from "../types";
+import { useDeviceDetection } from "../utils/deviceDetection";
+import ImageSkeleton from "./ImageSkeleton";
 
 interface IndividualPartnerSectionsProps {
   groom: PartnerDetails;
   bride: PartnerDetails;
-  onImagesLoad?: () => void;
 }
 
 interface ImageState {
@@ -19,23 +19,22 @@ interface ImageState {
 const IndividualPartnerSections: React.FC<IndividualPartnerSectionsProps> = ({
   groom,
   bride,
-  onImagesLoad
 }) => {
   const { isIOS } = useDeviceDetection();
   const [groomImage, setGroomImage] = useState<ImageState>({
     loaded: false,
-    error: false
+    error: false,
   });
   const [brideImage, setBrideImage] = useState<ImageState>({
     loaded: false,
-    error: false
+    error: false,
   });
 
   // Preload images with error handling
   useEffect(() => {
     const preloadImage = (
       src: string,
-      setImageState: React.Dispatch<React.SetStateAction<ImageState>>
+      setImageState: React.Dispatch<React.SetStateAction<ImageState>>,
     ) => {
       if (!src) {
         setImageState({ loaded: false, error: true });
@@ -56,17 +55,11 @@ const IndividualPartnerSections: React.FC<IndividualPartnerSectionsProps> = ({
     preloadImage(bride.image, setBrideImage);
   }, [groom.image, bride.image]);
 
-  // Call onImagesLoad when both images are loaded or errored
-  useEffect(() => {
-    if ((groomImage.loaded || groomImage.error) && (brideImage.loaded || brideImage.error)) {
-      onImagesLoad?.();
-    }
-  }, [groomImage.loaded, groomImage.error, brideImage.loaded, brideImage.error, onImagesLoad]);
   // Helper function to render Instagram link
   const renderInstagramLink = (partner: PartnerDetails) => {
     if (!partner.instagramHandle?.trim()) return null;
 
-    const cleanHandle = partner.instagramHandle.replace('@', '').trim();
+    const cleanHandle = partner.instagramHandle.replace("@", "").trim();
     const instagramUrl = `https://instagram.com/${cleanHandle}`;
 
     return (
@@ -92,12 +85,13 @@ const IndividualPartnerSections: React.FC<IndividualPartnerSectionsProps> = ({
   const renderPartnerSection = (
     partner: PartnerDetails,
     imageState: ImageState,
-    sectionType: 'groom' | 'bride'
+    sectionType: "groom" | "bride",
   ) => {
     // Get fallback gradient classes for error state
-    const errorGradient = sectionType === 'groom'
-      ? 'bg-gradient-to-br from-green-800 to-green-600'
-      : 'bg-gradient-to-br from-rose-600 to-rose-400';
+    const errorGradient =
+      sectionType === "groom"
+        ? "bg-gradient-to-br from-green-800 to-green-600"
+        : "bg-gradient-to-br from-rose-600 to-rose-400";
 
     return (
       <section
@@ -106,20 +100,19 @@ const IndividualPartnerSections: React.FC<IndividualPartnerSectionsProps> = ({
           md:bg-[url(${partner.imageDesktop})]
           relative w-full h-screen md:h-[80vh] lg:h-[85vh] xl:h-[90vh]
           flex items-center justify-center bg-cover bg-center bg-no-repeat
-          ${isIOS ? 'bg-fixed' : ''}
-          ${imageState.error ? errorGradient : ''}
+          ${isIOS ? "" : "bg-scroll"}
+          ${imageState.error ? errorGradient : ""}
         `}
         style={{
-          // Use scroll attachment for iOS to prevent zoom issues
-          backgroundAttachment: isIOS ? 'scroll' : 'fixed',
           // iOS-specific optimizations
           ...(isIOS && {
-            backgroundSize: 'cover',
-            backgroundPosition: 'center center',
+            backgroundAttachment: "fixed",
+            backgroundSize: "cover",
+            backgroundPosition: "center center",
             willChange: "transform",
             // Prevent iOS Safari zoom issues
-            WebkitBackgroundSize: 'cover',
-          })
+            WebkitBackgroundSize: "cover",
+          }),
         }}
         role="region"
         aria-labelledby={`${sectionType}-heading`}
@@ -130,10 +123,7 @@ const IndividualPartnerSections: React.FC<IndividualPartnerSectionsProps> = ({
           <div className="text-center text-white max-w-screen mx-auto mt-56 space-y-2 md:space-y-6 relative">
             {/* Loading state */}
             {!imageState.loaded && !imageState.error && (
-              <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/20 backdrop-blur-sm rounded-lg p-6">
-                <div className="w-12 h-12 border-4 border-white/30 border-t-white rounded-full animate-spin mb-4"></div>
-                <p className="text-white/80 font-light animate-pulse">Loading photo...</p>
-              </div>
+              <ImageSkeleton className="absolute inset-0" />
             )}
 
             {/* Error state */}
@@ -151,17 +141,17 @@ const IndividualPartnerSections: React.FC<IndividualPartnerSectionsProps> = ({
             <h2
               id={`${sectionType}-heading`}
               className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-serif"
-              style={{ textShadow: '3px 3px 6px rgba(0, 0, 0, 0.9)' }}
+              style={{ textShadow: "3px 3px 6px rgba(0, 0, 0, 0.9)" }}
             >
-              {partner.fullName || 'Name unavailable'}
+              {partner.fullName || "Name unavailable"}
             </h2>
 
             {/* Partner family info */}
             <p
               className="text-sm md:text-xl max-w-screen mx-auto md:leading-relaxed"
-              style={{ textShadow: '3px 3px 6px rgba(0, 0, 0, 0.9)' }}
+              style={{ textShadow: "3px 3px 6px rgba(0, 0, 0, 0.9)" }}
             >
-              {partner.parentInfo || 'Family information unavailable'}
+              {partner.parentInfo || "Family information unavailable"}
             </p>
 
             {/* Instagram link */}
@@ -173,9 +163,9 @@ const IndividualPartnerSections: React.FC<IndividualPartnerSectionsProps> = ({
   };
 
   return (
-    <div className="w-full">
-      {renderPartnerSection(groom, groomImage, 'groom')}
-      {renderPartnerSection(bride, brideImage, 'bride')}
+    <div id="aboutUs" className="w-full">
+      {renderPartnerSection(groom, groomImage, "groom")}
+      {renderPartnerSection(bride, brideImage, "bride")}
     </div>
   );
 };
