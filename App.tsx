@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import AdminPage from "./components/AdminPage";
 import CommentSection from "./components/CommentSection";
@@ -21,69 +21,21 @@ import { MusicProvider } from "./hooks/MusicContext";
 import BrideGroomSection from "./components/BrideGroomSection";
 import IndividualPartnerSections from "./components/IndividualPartnerSections";
 import WeddingGiftSection from "./components/WeddingGiftSection";
+import { useInvitation } from "./hooks/useInvitation";
+import { useLoading } from "./hooks/useLoading";
+import { useWindowSize } from "./hooks/useWindowSize";
 
 const App: React.FC = () => {
-  const [loading, setLoading] = useState(true);
-  const [heroLoaded, setHeroLoaded] = useState(false);
   const location = useLocation();
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-  const [isInvitationOpened, setIsInvitationOpened] = useState(false);
-  const [isInvitationAnimating, setIsInvitationAnimating] = useState(false);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  // Update loading state when hero image is loaded
-  useEffect(() => {
-    if (heroLoaded) {
-      setLoading(false);
-    }
-  }, [heroLoaded]);
-
-  // Additional fallback: Hide loader if we're not on home page
-  useEffect(() => {
-    if (location.pathname !== "/" && loading) {
-      setLoading(false);
-    }
-  }, [location.pathname, loading]);
-
-  const handleHeroLoaded = () => {
-    setHeroLoaded(true);
-  };
-
-  const handleInvitationOpen = () => {
-    setIsInvitationAnimating(true);
-    // After animation completes, show content and scroll
-    setTimeout(() => {
-      setIsInvitationOpened(true);
-      setIsInvitationAnimating(false);
-      // Smooth scroll to bride-groom section
-      setTimeout(() => {
-        const brideGroomElement = document.getElementById("bride-groom");
-        if (brideGroomElement) {
-          brideGroomElement.scrollIntoView({ behavior: "smooth" });
-        }
-      }, 100);
-    }, 1000); // Match animation duration
-  };
-
-  // Reset invitation state when navigating away from home page
-  useEffect(() => {
-    if (location.pathname === "/") {
-      setIsInvitationOpened(false);
-      setIsInvitationAnimating(false);
-    }
-  }, [location.pathname]);
-
-  const showLoader = loading && location.pathname === "/";
+  const { isMobile } = useWindowSize();
+  const { handleHeroLoaded, showLoader } = useLoading({
+    pathname: location.pathname,
+  });
+  const {
+    isOpened: isInvitationOpened,
+    isAnimating: isInvitationAnimating,
+    handleOpen: handleInvitationOpen,
+  } = useInvitation(location.pathname);
 
   return (
     <MusicProvider>
