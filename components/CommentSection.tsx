@@ -1,16 +1,18 @@
-
-import React, { useState } from 'react';
-import CommentList from './CommentList';
-import CommentForm from './CommentForm';
-import SectionWrapper from './SectionWrapper';
-import { useComments } from '../hooks/useComments';
-import CommentSkeleton from './CommentSkeleton';
-import Pagination from './Pagination';
+import React, { useState } from "react";
+import CommentList from "./CommentList";
+import CommentForm from "./CommentForm";
+import SectionWrapper from "./SectionWrapper";
+import { useComments } from "../hooks/useComments";
+import CommentSkeleton from "./CommentSkeleton";
+import Pagination from "./Pagination";
 
 const CommentSection: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 5; // Number of comments per page
-  const { comments, loading, error, totalComments, addComment } = useComments(currentPage, pageSize);
+  const { comments, loading, error, totalComments, addComment } = useComments(
+    currentPage,
+    pageSize,
+  );
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const totalPages = Math.ceil(totalComments / pageSize);
@@ -19,10 +21,16 @@ const CommentSection: React.FC = () => {
     setCurrentPage(page);
   };
 
-  const handleCommentSubmit = async (message: string) => {
+  const handleCommentSubmit = async ({
+    message,
+    name,
+  }: {
+    message: string;
+    name: string;
+  }) => {
     setIsSubmitting(true);
     try {
-      await addComment(message);
+      await addComment(message, name);
       setCurrentPage(1); // Go back to the first page after adding a comment
     } catch (error) {
       // Error is already handled in the hook
@@ -31,7 +39,11 @@ const CommentSection: React.FC = () => {
   };
 
   return (
-    <SectionWrapper id="comments" className="bg-cream pattern-bg" title="Komentar Tamu">
+    <SectionWrapper
+      id="comments"
+      className="bg-cream pattern-bg"
+      title="Komentar Tamu"
+    >
       <div className="text-center">
         <p className="text-lg md:text-xl text-charcoal-gray mb-8">
           Tinggalkan pesan untuk pasangan bahagia!
