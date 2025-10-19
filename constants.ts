@@ -34,7 +34,7 @@ export const WEDDING_DETAILS: WeddingDetails = {
   rsvpByDate: "15 November 2025",
   galleryImages: [
     {
-      src: "https://imghost.online/ib/vXW9g0OVDmDRdbD_1753546747.jpg",
+      src: "https://i.ibb.co.com/MkB3Vbyn/Copy-of-EDITED-0013-min.jpg",
       alt: "Pasangan tersenyum",
     },
     {
@@ -57,6 +57,14 @@ export const WEDDING_DETAILS: WeddingDetails = {
       src: "https://imghost.online/ib/77AGrduhR0UjfVe_1753547089.jpg",
       alt: "Detail close-up",
     },
+    {
+      src: "https://i.ibb.co.com/S7tJDwwv/Copy-of-EDITED-0468-min-min.jpg",
+      alt: "Couple"
+    },
+    {
+      src: "https://i.ibb.co.com/S7tJDwwv/Copy-of-EDITED-0517-min-min.jpg",
+      alt: "Couple"
+    }
   ],
   footerMessage: "Dibuat dengan cinta untuk hari istimewa kami.",
   groomDetails: {
