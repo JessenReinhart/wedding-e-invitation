@@ -62,7 +62,11 @@ export const WEDDING_DETAILS: WeddingDetails = {
       alt: "Couple"
     },
     {
-      src: "https://i.ibb.co.com/S7tJDwwv/Copy-of-EDITED-0517-min-min.jpg",
+      src: "https://i.ibb.co.com/J9jQYFD/Copy-of-EDITED-0517-min-min.jpg",
+      alt: "Couple"
+    },
+    {
+      src: "https://i.ibb.co.com/m5M2cYpY/Copy-of-EDITED-0414-min.jpg",
       alt: "Couple"
     }
   ],
