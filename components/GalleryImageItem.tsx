@@ -38,7 +38,6 @@ const GalleryImageItem: React.FC<GalleryImageItemProps> = ({ src, alt }) => {
           className={`object-cover w-full h-full transition-opacity duration-500 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
           onLoad={handleLoad}
           onError={handleError}
-          loading="lazy" // Add lazy loading attribute
         />
       )}
     </div>
