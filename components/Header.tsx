@@ -81,6 +81,8 @@ const Header: React.FC<HeaderProps> = ({
     : "text-white";
   const navLinkHoverTextColor = "hover:text-rose-gold";
 
+  if (isMobile && !isInvitationOpened) return null
+
   return (
     <header className={headerClasses}>
       <div
