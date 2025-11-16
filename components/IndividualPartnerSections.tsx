@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { PartnerDetails } from "../types";
 import { useDeviceDetection } from "../utils/deviceDetection";
-import ImageSkeleton from "./ImageSkeleton";
 
 interface IndividualPartnerSectionsProps {
   groom: PartnerDetails;
@@ -121,11 +120,6 @@ const IndividualPartnerSections: React.FC<IndividualPartnerSectionsProps> = ({
         <div className="absolute inset-0 bg-gradient-to-br from-black/40 via-black/20 to-black/40 flex items-center justify-center p-4 md:p-8">
           {/* Content container */}
           <div className="text-center text-white max-w-screen mx-auto mt-56 space-y-2 md:space-y-6 relative">
-            {/* Loading state */}
-            {!imageState.loaded && !imageState.error && (
-              <ImageSkeleton className="absolute inset-0" />
-            )}
-
             {/* Error state */}
             {imageState.error && (
               <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/30 backdrop-blur-sm rounded-lg p-6">
