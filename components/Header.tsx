@@ -27,6 +27,7 @@ const Header: React.FC<HeaderProps> = ({
   const initials = `${brideName.charAt(0)} & ${groomName.charAt(0)}`;
   const location = useLocation();
   const isAdminPage = location.pathname.startsWith("/admin");
+  const isRSVPPage = location.pathname.startsWith("/rsvp");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -66,7 +67,7 @@ const Header: React.FC<HeaderProps> = ({
   // Controls background, shadow, blur, and padding (when not transparent)
   const applyScrolledStyle = isAdminPage || isScrolled || isInvitationOpened;
 
-  const headerClasses = `fixed z-50 transition-all duration-300
+  const headerClasses = `${isAdminPage || isRSVPPage ? 'relative' : 'fixed'} z-50 transition-all duration-300
     ${isMobile ? "bottom-4 inset-x-4 rounded-xl" : "top-0 left-0 right-0 w-full"}
     ${isNavbarContentVisible ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}
     ${applyScrolledStyle ? "bg-cream/80 shadow-lg backdrop-blur-sm py-3" : "bg-transparent py-3"}
