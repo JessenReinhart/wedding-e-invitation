@@ -38,6 +38,9 @@ const Hero: React.FC<HeroProps> = ({
     mobile: false,
   });
 
+  const params = new URLSearchParams(location.search);
+  const showPartner = params.get("showPartner") !== "false";
+
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const name = params.get("name");
@@ -128,7 +131,7 @@ const Hero: React.FC<HeroProps> = ({
         <p className="text-2xl md:text-3xl font-light mb-8">{date}</p>
         {visitorName && (
           <h2 className="font-serif text-xl md:text-3xl mb-4">
-            Kepada {visitorName} & Pasangan
+            Kepada {visitorName}{showPartner && " & Pasangan"}
           </h2>
         )}
         <button
