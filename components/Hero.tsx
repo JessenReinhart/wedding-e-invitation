@@ -39,7 +39,7 @@ const Hero: React.FC<HeroProps> = ({
   });
 
   const params = new URLSearchParams(location.search);
-  const showPartner = params.get("showPartner") !== "false";
+  const showPartner = params.get("showPartner")?.toLowerCase() !== "false";
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
